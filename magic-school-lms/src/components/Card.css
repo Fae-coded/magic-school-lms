@@ -1,0 +1,23 @@
+.card {
+    width: 300px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    background-color: #613f75;
+    height:fit-content;
+    margin: 10px;
+}
+
+.card-title,
+.card-content {
+    margin: 0;
+    color: #8d91c7;
+
+}
+
+.card-button {
+    text-align: center;
+    width: 90%;
+
+}
