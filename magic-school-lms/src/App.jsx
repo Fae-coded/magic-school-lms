@@ -1,18 +1,16 @@
-import React from 'react'
 import './App.css'
+import StudentDashboard from './pages/student.jsx'
+import Root from './pages/Root.jsx' 
 
 function App() {
   
 
   return (
     <>
-      <div>
-        
-      
-      </div>
+    
       
     </>
   )
 }
 
-export default App
+export default App;
