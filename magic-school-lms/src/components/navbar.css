@@ -1,0 +1,33 @@
+.navbar {
+    display: flex;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100vw;
+}
+
+.navbar-crest{
+    float: left;
+    padding: 15px 20px;
+    width: 225px;
+    height: auto;
+}
+
+.navbar-button {
+    float: left;
+    margin: 80px 20px;
+    border-radius: 15px;
+    font-size: 25px;
+}
+
+.navbar-welcome {
+    float: right;
+    margin-left: auto;
+    font-size: 25px;
+}
+
+.navbar-login {
+    float: right;
+    margin: 20px 30px;
+    font-size: 25px;
+}

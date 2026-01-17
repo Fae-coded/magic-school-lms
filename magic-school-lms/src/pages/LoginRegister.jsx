@@ -5,7 +5,7 @@ import RegisterForm from "../components/RegisterForm.jsx";
 
 
 export default function Form() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   return (
     <div>

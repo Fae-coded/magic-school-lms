@@ -1,23 +1,35 @@
 .card {
-    width: 300px;
+    width: 700px;
+    height: fit-content;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    background-color: #613f75;
-    height:fit-content;
-    margin: 10px;
+    display: flexbox;
+    background-color: #785080;
+    margin: 20px 10px;
 }
 
 .card-title,
 .card-content {
-    margin: 0;
-    color: #8d91c7;
+    text-align: left;
+    margin: 10px 5px;
+    color: #E3D3E4;
 
 }
 
 .card-button {
     text-align: center;
-    width: 90%;
+    width: 30%;
+    position: relative;
+    left: 500px;
+    margin-top: 15px;
+    display: block
+}
 
+.second-card-button {
+    text-align: center;
+    width: 30%;
+    position: relative;
+    left: 500px;
+    margin-top: 15px;
+    display: block
 }
