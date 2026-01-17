@@ -11,7 +11,7 @@ export function Card({
             <h2 className="card-title">{title}</h2>
             <p className="card-content">{description}</p>
             <button className="card-button">{buttonText}</button>
-            <button className="card-button">{secondButtonText}</button>
+            <button className="second-card-button">{secondButtonText}</button>
         </div>
     );
 }

@@ -10,11 +10,6 @@ export default function StudentCourses() {
                   description="Course description"
                   buttonText="Enrolled"
                 />
-                <Card 
-                  title="Course Title"
-                  description="Course description"
-                  buttonText="Enrolled"
-                />
                 
             </CardContainer>
     );
