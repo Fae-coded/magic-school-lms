@@ -22,5 +22,8 @@ class Course(models.Model):
     course_description = models.TextField()
     teacher = models.ForeignKey(User, on_delete=models.SET(get_substitute_teacher), limit_choices_to={'role': User.Role.TEACHER})
     
+    class Meta:
+        ordering = ['course_title']
+    
     def __str__(self):
         return self.course_title
