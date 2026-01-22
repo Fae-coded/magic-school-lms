@@ -1,10 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 
-def get_substitute_teacher():
-    # Returns the ID of a substitute teacher when a teacher is deleted.
-    return User.objects.filter(role=User.Role.TEACHER).first().id
-
+# Custom User model with roles
 class User(AbstractUser):
     class Role(models.TextChoices):
         STUDENT = 'student', 'Student'
@@ -17,10 +14,16 @@ class User(AbstractUser):
         default=Role.STUDENT
     )
 
+# Returns the ID of a substitute teacher when a teacher is deleted.
+def get_substitute_teacher():
+    return User.objects.filter(role=User.Role.TEACHER).first().id
+
+# Course model with assigned teacher and enrolled students
 class Course(models.Model):
     course_title = models.CharField(max_length=100)
     course_description = models.TextField()
     teacher = models.ForeignKey(User, on_delete=models.SET(get_substitute_teacher), limit_choices_to={'role': User.Role.TEACHER})
+    enrolled_students = models.ManyToManyField(User, related_name='courses', limit_choices_to={'role': User.Role.STUDENT})
     
     class Meta:
         ordering = ['course_title']
