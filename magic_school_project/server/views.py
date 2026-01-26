@@ -90,13 +90,19 @@ def course_detail_view(request, pk):
         else:
             return Response({'error': 'Only teachers and admins can delete courses.'}, status=403)
 
+# View to enroll a student in a course?
+# @api_view(['POST'])
+# def enroll_student(request, course_id):
+    
+    #if request.user.role == user.role.STUDENT:
+    #also check if student already enrolled.
+
+
 # View to get enrolled courses for the logged-in student
 @api_view(['GET'])
 def my_courses(request):
     serializer = StudentCoursesSerializer(request.user)
     return Response(serializer.data)
-
-# View to enroll a student in a course?
 
 # View to get all of a teacher's courses
 @api_view(['GET'])

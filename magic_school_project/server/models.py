@@ -1,5 +1,11 @@
 from django.db import models
-from django.contrib.auth.models import AbstractUser
+from django.contrib.auth.models import AbstractUser, UserManager
+
+# Custom user manager
+class CustomUserManager(UserManager):
+    def create_superuser(self, username, email=None, password=None, **extra_fields):
+        extra_fields.setdefault('role', 'admin')  # Set role to admin for superusers
+        return super().create_superuser(username, email, password, **extra_fields)
 
 # Custom User model with roles
 class User(AbstractUser):
@@ -13,6 +19,8 @@ class User(AbstractUser):
         choices=Role.choices,
         default=Role.STUDENT
     )
+    
+    objects = CustomUserManager()  # Use custom manager
 
 # Returns the ID of a substitute teacher when a teacher is deleted.
 def get_substitute_teacher():

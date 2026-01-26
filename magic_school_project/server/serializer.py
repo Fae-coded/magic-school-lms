@@ -5,7 +5,7 @@ from .models import Course, User
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'email', 'role', 'id']
+        fields = ['username','first_name', 'email', 'role', 'id']
 
 # Serializer for Course model including enrolled students
 class CourseSerializer(serializers.ModelSerializer):
