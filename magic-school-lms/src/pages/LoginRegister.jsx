@@ -2,13 +2,13 @@
 import { useState } from "react";
 import LoginForm from "../components/LoginForm.jsx";
 import RegisterForm from "../components/RegisterForm.jsx";
-
+import '../components/form.css';
 
 export default function Form() {
   const [isLogin, setIsLogin] = useState(true);
 
   return (
-    <div>
+    <div className="form-container">
       {isLogin ? <> 
       <LoginForm /> 
       <p>Not enrolled yet? <a href="#" onClick={()=> setIsLogin(false)}>Register here!</a></p>

@@ -1,7 +1,9 @@
+import '../components/form.css';
+
 export default function RegisterForm() {
     return (
         <div>
-          <h2>Register</h2>
+          <h2 className= "form-title">Register</h2>
             <form>
               <label>Name:
                 <input 

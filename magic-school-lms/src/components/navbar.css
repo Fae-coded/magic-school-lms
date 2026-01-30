@@ -14,20 +14,31 @@
 }
 
 .navbar-button {
-    float: left;
-    margin: 80px 20px;
-    border-radius: 15px;
+    
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 20px;
+    margin-top: 15px;;
+    border-radius: 10px;
     font-size: 25px;
+    background-image: linear-gradient(135deg, #E3D3E4 0%, #218380 100%);
+    color: #785080;
 }
 
 .navbar-welcome {
     float: right;
     margin-left: auto;
     font-size: 25px;
+    color: #E3D3E4;
 }
 
 .navbar-login {
     float: right;
-    margin: 20px 30px;
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 20px;
+    margin: 15px 20px;
+    border-radius: 10px;
     font-size: 25px;
+    background-color: #218380;
 }
