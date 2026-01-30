@@ -15,3 +15,5 @@ export function Card({
         </div>
     );
 }
+
+//Add onClick handlers to buttons to perform actions like enrolling in course or viewing details
