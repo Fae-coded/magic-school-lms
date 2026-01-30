@@ -2,20 +2,20 @@
   font-family: 'Book Antiqua', 'Palatino', 'Palatino Linotype', Georgia, serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: rgb(53, 53, 53);
+  background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
+  background-size: cover;
+  background-position: center;
 }
 
 a {
   font-size: 1em;
-  font-weight: 600;
-  color: #218380;
+  font-weight: 500;
+  color: #ffffff;
   text-decoration: inherit;
 }
 a:hover {
-  color: #31b9b5;
+  color: #36d6d1;
 }
 
 body {
@@ -24,11 +24,15 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
+  background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
+  background-size: cover;
+  background-position: center;
 }
 
 h1 {
   font-size: 3em;
   line-height: 1;
+  color: #E3D3E4;
 }
 
 button {
@@ -38,7 +42,5 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
 }

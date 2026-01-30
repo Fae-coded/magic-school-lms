@@ -16,20 +16,14 @@
 
 }
 
-.card-button {
+.card-button, .second-card-button {
     text-align: center;
     width: 30%;
     position: relative;
     left: 500px;
     margin-top: 15px;
-    display: block
-}
-
-.second-card-button {
-    text-align: center;
-    width: 30%;
-    position: relative;
-    left: 500px;
-    margin-top: 15px;
-    display: block
+    display: block;
+    font-size: 20px;
+    background-image: linear-gradient(135deg, #E3D3E4 0%, #218380 100%);
+    color: #785080;
 }
