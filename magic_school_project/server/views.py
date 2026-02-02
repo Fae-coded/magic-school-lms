@@ -1,8 +1,66 @@
 from rest_framework.response import Response
-from rest_framework.decorators import api_view
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from .models import Course, User
-from .serializer import CourseSerializer, UserSerializer, StudentCoursesSerializer
+from .serializer import *
+
+# View to register a new user.
+@api_view(['POST'])
+@permission_classes([])
+def register_user(request):
+    serializer = UserRegistrationSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    
+    user = serializer.save()
+    refresh = RefreshToken.for_user(user)
+    
+    return Response({
+        "user": serializer.data,
+        "tokens": {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token)
+        }
+    }, status=status.HTTP_201_CREATED)
+
+# View to login a user.
+@api_view(['POST'])
+@permission_classes([])
+def login_user(request):
+    serializer = UserLoginSerializer(data=request.data)
+    serializer.is_valid(raise_exception=True)
+    
+    user = serializer.validated_data['user']
+    refresh = RefreshToken.for_user(user)
+    
+    return Response({
+        "user": serializer.data,
+        "tokens": {
+            "refresh": str(refresh),
+            "access": str(refresh.access_token)
+        }
+    }, status=status.HTTP_200_OK)
+    
+# View to logout a user.
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def logout_user(request):
+    refresh_token = request.data.get("refresh")
+    
+    if not refresh_token:
+        return Response(
+            {"error": "Refresh token is required."},
+            status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        token = RefreshToken(refresh_token)
+        token.blacklist()
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+    
+    except Exception as e:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+
 
 # View to list all users.
 @api_view(['GET'])
@@ -108,12 +166,14 @@ def enroll_student(request, course_id):
 
 # View to get enrolled courses for the logged-in student
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def my_courses(request):
     serializer = StudentCoursesSerializer(request.user)
     return Response(serializer.data)
 
 # View to get all of a teacher's courses
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def teacher_courses(request):
     courses = Course.objects.filter(teacher=request.user)
     serializer = CourseSerializer(courses, many=True)
