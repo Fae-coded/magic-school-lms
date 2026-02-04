@@ -40,13 +40,14 @@ class UserLoginSerializer(serializers.Serializer):
     password = serializers.CharField(write_only=True)
     
     def validate(self, attrs):
-        username = attrs.get("username")
-        password = attrs.get("password")
-        user = authenticate(username=username, password=password)
+        user = authenticate(
+            username=attrs.get("username"),
+            password=attrs.get("password")
+        )
         
-        if user and user.is_active:
-            return {"user": user}
-        raise serializers.ValidationError("Invalid credentials.")
+        if user is None:
+            raise serializers.ValidationError("Invalid credentials.")
+        return {"user": user}
 
 # Serializer for Course model including enrolled students
 class CourseSerializer(serializers.ModelSerializer):

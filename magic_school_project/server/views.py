@@ -1,6 +1,6 @@
 from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework import status
 from .models import Course, User
@@ -8,7 +8,7 @@ from .serializer import *
 
 # View to register a new user.
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def register_user(request):
     serializer = UserRegistrationSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -26,7 +26,7 @@ def register_user(request):
 
 # View to login a user.
 @api_view(['POST'])
-@permission_classes([])
+@permission_classes([AllowAny])
 def login_user(request):
     serializer = UserLoginSerializer(data=request.data)
     serializer.is_valid(raise_exception=True)
@@ -35,7 +35,10 @@ def login_user(request):
     refresh = RefreshToken.for_user(user)
     
     return Response({
-        "user": serializer.data,
+        "user": {
+            "id": user.id,
+            "username": user.username,
+            "role": user.role},
         "tokens": {
             "refresh": str(refresh),
             "access": str(refresh.access_token)

@@ -56,5 +56,3 @@ export default function CreateCourse() {
     </div>
   );
 };
-
-//Navigate back to respectively dashboard after course created?
