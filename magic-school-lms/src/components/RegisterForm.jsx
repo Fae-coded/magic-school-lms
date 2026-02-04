@@ -1,7 +1,11 @@
 import '../components/form.css';
 import { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
+
+  const navigate = useNavigate();
+
     const [formData, setFormData] = useState({
         username: '',
         email: '',
@@ -16,6 +20,8 @@ export default function RegisterForm() {
     }
 
     const [isLoading, setIsLoading] = useState(false);
+    const [successMessage, setSuccessMessage] = useState(null);
+    const [errorMessage, setErrorMessage] = useState(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -34,12 +40,16 @@ export default function RegisterForm() {
             });
             console.log("Response status:", response.status);
             if (response.ok) {
-                console.log('Registration successful');
+                setSuccessMessage('Registration successful!');
+                navigate('/login');
             } else {
-                console.error('Registration failed');
+                setErrorMessage('Registration failed. Please try again.');
             }
         } catch (error) {
-            console.error('Error during registration:', error);
+            if (error.response) {
+                console.error('Error response:', error.response);
+                setErrorMessage('Registration failed. Please check your input and try again.');
+            }
         } finally {
             setIsLoading(false);
         }
@@ -80,6 +90,8 @@ export default function RegisterForm() {
             <br></br>
           <button type="submit" disabled={isLoading}>Register</button>
         </form>
+          {successMessage && <p className="success-message">{successMessage}</p>}
+          {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     );
 }

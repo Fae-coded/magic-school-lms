@@ -30,6 +30,11 @@ features here and technical explanations of how your application works under the
 - [Figma](https://www.figma.com/) was used for producing initial wireframes. Wireframes can be viewed [here](https://www.figma.com/design/Awb57P0vDdMdV5rvqqdX1N/Magic-School-LMS?).
 - [Phind](https://www.phind.com/) used as a troubleshoot tool.
 
+## Future enhancements
+
+- Serializer for user login checks user is also active before attempting to log the user into their account. 
+- Admin's user management has option to mark a user as inactive/active.
+
 ## Testing
 
 ## Deployment

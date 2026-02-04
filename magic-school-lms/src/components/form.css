@@ -24,3 +24,15 @@ input{
     border-radius: 5px;
     border: 1px solid #ccc;
 }
+
+.success-message {
+    color: #2AFFA6;
+    font-size: 24px;
+    text-align: center;
+}
+
+.error-message {
+    color: #FFFFFF;
+    font-size: 24px;
+    text-align: center;
+}

@@ -1,8 +1,11 @@
 import '../components/form.css';
 import { useState } from 'react';
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function LoginForm() {
+
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     password: ''
@@ -16,6 +19,8 @@ export default function LoginForm() {
   }
 
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,24 +44,23 @@ export default function LoginForm() {
         localStorage.setItem("accessToken", data.tokens.access);
         localStorage.setItem("refreshToken", data.tokens.refresh);
         localStorage.setItem("role", data.user.role);
-        console.log('Login successful:', data);
+        setSuccessMessage('Login successful!');
+        if (data.user.role === 'teacher') {
+          navigate('/teacher');
+        } else if (data.user.role === 'admin') {
+          navigate('/admin');
+        } else {
+          navigate('/student');
+        }
       } else {
-        console.error('Login failed');
+        setErrorMessage('Login failed. Please try again.');
       }
     } catch (error) {
-      console.error('Error during login:', error);
+      if (error.response) {
+        console.error('Error response:', error.response?.data);
+      }
     } finally {
       setIsLoading(false);
-      //redirect to dashboard after login
-      //handleRedirect();  have function handleRedirect somewhere
-      // const navigate = useNavigate();
-      // if (data.user.role === 'teacher') {
-      //   navigate('/teacher');
-      // } else if (data.user.role === 'admin') {
-      //   navigate('/admin');
-      // } else {
-      //   navigate('/student');
-      // }
     }
   };
 
@@ -87,6 +91,8 @@ export default function LoginForm() {
             <br></br>
           <button type="submit" disabled={isLoading}>Login</button>
         </form>
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
       </div>
     );
 }
