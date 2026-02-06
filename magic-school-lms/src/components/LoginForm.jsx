@@ -73,13 +73,14 @@ export default function LoginForm() {
                 <input 
                   type="text" 
                   name= "username"
-                  placeholder="username" 
+                  placeholder="Username" 
                   value={formData.username}
                   onChange={handleChange}
                 />
               </label>
             <br></br>
               <label>Password:
+                <br></br>
                 <input 
                   type="password" 
                   name= "password"

@@ -59,16 +59,18 @@ export default function RegisterForm() {
         <div>
           <h2 className= "form-title">Register</h2>
             <form onSubmit={handleSubmit}>
-              <label>username:
+              <label>Username:
+                <br></br>
                 <input 
                 type="text" 
                 name="username"
                 value={formData.username}
                 onChange={handleChange}
-                placeholder="username" />
+                placeholder="Username" />
               </label>
               <br></br>
               <label>Email:
+                <br></br>
                 <input 
                 type="email" 
                 name="email"
@@ -79,6 +81,7 @@ export default function RegisterForm() {
               </label>
             <br></br>
               <label>Password:
+                <br></br>
                 <input 
                 type="password" 
                 name="password"
@@ -88,6 +91,7 @@ export default function RegisterForm() {
                 />
               </label>
             <br></br>
+            
           <button type="submit" disabled={isLoading}>Register</button>
         </form>
           {successMessage && <p className="success-message">{successMessage}</p>}
