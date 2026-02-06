@@ -13,18 +13,48 @@ import EditCourse from './pages/EditCourse.jsx';
 import AdminDashboard from './pages/Admin.jsx';
 import ManageUsers from './pages/ManageUsers.jsx';
 import App from './App.jsx'
+import ProtectedRoute from './components/ProtectedRoute.jsx';
+// import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Root />}>
     <Route index element={ <Home /> } />
     <Route path="/login-register" element={ <Form /> } />
-    <Route path="/student" element={ <StudentDashboard /> } />
-    <Route path="/enrolled-courses" element={ <StudentCourses /> } />
-    <Route path="/teacher" element={ <TeacherDashboard /> } />
-    <Route path="/create-course" element={ <CreateCourse /> } />
-    <Route path="/edit-course" element={ <EditCourse /> } />
-    <Route path="/admin" element={ <AdminDashboard /> } />
-    <Route path="/manage-users" element={ <ManageUsers /> } />
+
+    <Route path="/student" element={
+      <ProtectedRoute allowedRoles={["student"]}> 
+        <StudentDashboard />
+      </ProtectedRoute>  } />
+
+    <Route path="/enrolled-courses" element={ 
+      <ProtectedRoute allowedRoles={["student"]}>
+        <StudentCourses /> 
+      </ProtectedRoute>} />
+
+    <Route path="/teacher" element={
+      <ProtectedRoute allowedRoles={["teacher"]}>
+        <TeacherDashboard /> 
+      </ProtectedRoute>} />
+
+    <Route path="/create-course" element={
+      <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+        <CreateCourse />
+      </ProtectedRoute>} />
+
+    <Route path="/edit-course" element={
+      <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+        <EditCourse />
+      </ProtectedRoute>} />
+
+    <Route path="/admin" element={
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <AdminDashboard />
+      </ProtectedRoute>} />
+
+    <Route path="/manage-users" element={ 
+      <ProtectedRoute allowedRoles={["admin"]}>
+        <ManageUsers />
+      </ProtectedRoute>} />
   
   </Route>
   
@@ -33,7 +63,9 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  {/* <App /> */}
+  {/* <AuthProvider> */}
+  <App />
   <RouterProvider router={router} />
+  {/* </AuthProvider> */}
   </StrictMode>,
 )
