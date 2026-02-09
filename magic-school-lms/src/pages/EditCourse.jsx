@@ -1,12 +1,20 @@
 import { InputCard } from "../components/InputCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import AuthContext from '../context/AuthContext';
 
 // Page for editing an existing course
 export default function EditCourse() {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const { pk } = useParams();  // Get course ID from URL params
-  const [courseTitle, setCourseTitle] = useState("Current Course Title");
-  const [courseDescription, setCourseDescription] = useState("Current Course Description");
+  const [courseTitle, setCourseTitle] = useState();
+  const [courseDescription, setCourseDescription] = useState();
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
 
   // Fetch current course data on mount
   useEffect(() => {
@@ -42,23 +50,23 @@ export default function EditCourse() {
       const data = await response.json();
       if (response.ok) {
         console.log("Course edited:", data);
+        setSuccessMessage("Course updated");
       }
     } catch (error) {
       console.error("Error editing course:", error);
+      setErrorMessage("Course update failed. Please try again.");
     }
   };
 
   const handleCancel = () => {
     setCourseTitle("");
     setCourseDescription("");
-    // const navigate = useNavigate();
-    // if (user.role === "admin") {
-    //   navigate("/admin-dashboard");
-    // } else {
-    //   navigate("/teacher-dashboard");
+    if (user.role === "admin") {
+      navigate("/admin");
+    } else {
+      navigate("/teacher");
     };
-
-    //Navigate back to respective dashboard after course edit confirmed?
+    };
 
   return (
     <div className="edit-course-page">
@@ -72,7 +80,8 @@ export default function EditCourse() {
         onPrimaryClick={() => editCourse(pk)}
         secondButtonText="Cancel"
         onCancelClick={handleCancel} 
-        //Add a delete button
+        successMessage={successMessage}
+        errorMessage={errorMessage}
         />
     </div>
   );
