@@ -14,7 +14,7 @@ import AdminDashboard from './pages/Admin.jsx';
 import ManageUsers from './pages/ManageUsers.jsx';
 import App from './App.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
-// import { AuthProvider } from "./context/AuthContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const router = createBrowserRouter(createRoutesFromElements(
   <Route path="/" element={<Root />}>
@@ -63,9 +63,9 @@ const router = createBrowserRouter(createRoutesFromElements(
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  {/* <AuthProvider> */}
+  <AuthProvider>
   <App />
   <RouterProvider router={router} />
-  {/* </AuthProvider> */}
+  </AuthProvider>
   </StrictMode>,
 )
