@@ -1,10 +1,13 @@
 import '../components/form.css';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useNavigate } from "react-router-dom";
+import AuthContext from '../context/AuthContext';
 
 export default function LoginForm() {
 
+  const { login } = useContext(AuthContext);
   const navigate = useNavigate();
+  
 
   const [formData, setFormData] = useState({
     username: '',
@@ -41,9 +44,8 @@ export default function LoginForm() {
       console.log("Response status:", response.status);
 
       if (response.ok) {
-        localStorage.setItem("accessToken", data.tokens.access);
-        localStorage.setItem("refreshToken", data.tokens.refresh);
-        localStorage.setItem("role", data.user.role);
+        login(data.user, data.tokens);
+        // console.log("Login successful, user:", data.user, data.tokens);
         setSuccessMessage('Login successful!');
         if (data.user.role === 'teacher') {
           navigate('/teacher');
