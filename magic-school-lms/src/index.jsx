@@ -41,10 +41,15 @@ const router = createBrowserRouter(createRoutesFromElements(
         <CreateCourse />
       </ProtectedRoute>} />
 
-    <Route path="/edit-course" element={
+    <Route path="/edit-course/:id" element={
       <ProtectedRoute allowedRoles={["teacher", "admin"]}>
         <EditCourse />
       </ProtectedRoute>} />
+
+    {/*<Route path= "/delete-course/:id" element= {
+      <ProtectedRoute allowedRoles={["teacher", "admin"]}>
+        <DeleteCourse/>
+      <ProtectedRoute/>} /> */}
 
     <Route path="/admin" element={
       <ProtectedRoute allowedRoles={["admin"]}>

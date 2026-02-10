@@ -1,26 +1,38 @@
 import { InputCard } from "../components/InputCard";
 import { useState, useEffect, useContext } from "react";
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
 
 // Page for editing an existing course
 export default function EditCourse() {
-  const { user } = useContext(AuthContext);
+  const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { pk } = useParams();  // Get course ID from URL params
+  const { id } = useParams();  // Get course ID from URL params, don't think this will work?
   const [courseTitle, setCourseTitle] = useState();
   const [courseDescription, setCourseDescription] = useState();
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
 
   // Fetch current course data on mount
   useEffect(() => {
+
+    if (!id || !tokens?.access) return;
     const fetchCourse = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/api/courses/${pk}`);
+        const response = await fetch(`http://localhost:8000/api/courses/${id}/`,
+          {
+        headers: {
+          Authorization: `Bearer ${tokens?.access}`,
+        }
+      }
+    );
+
+    if (!response.ok) {
+        throw new Error("Failed to fetch course");
+      }
+
         const data = await response.json();
         setCourseTitle(data.course_title);
         setCourseDescription(data.course_description);
@@ -29,21 +41,22 @@ export default function EditCourse() {
       }
     };
     
-    if (pk) {
+    if (id) {
       fetchCourse();
     }
-  }, [pk]);
+  }, [id, tokens]);
 
-  const editCourse = async (pk) => {
+  const editCourse = async (id) => {
     const courseDetails = {
       course_title: courseTitle,
       course_description: courseDescription,
     };
     try {
-      const response = await fetch(`http://localhost:8000/api/courses/${pk}`, {
+      const response = await fetch(`http://localhost:8000/api/courses/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${tokens?.access}`,
         },
         body: JSON.stringify(courseDetails),
       });
@@ -77,12 +90,12 @@ export default function EditCourse() {
         description={courseDescription}
         onDescriptionChange={(e) => setCourseDescription(e.target.value)}
         buttonText="Save Changes"
-        onPrimaryClick={() => editCourse(pk)}
+        onPrimaryClick={() => editCourse(id)}
         secondButtonText="Cancel"
         onCancelClick={handleCancel} 
-        successMessage={successMessage}
-        errorMessage={errorMessage}
         />
+        {successMessage && <p className="success-message">{successMessage}</p>}
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 };
