@@ -19,7 +19,7 @@ export default function CreateCourse() {
       course_description: courseDescription,
     };
     try {
-      console.log("Access token:", tokens?.access);
+      // console.log("Access token:", tokens?.access);
       const response = await fetch("http://127.0.0.1:8000/api/courses/", {
         method: "POST",
         headers: {
@@ -32,7 +32,6 @@ export default function CreateCourse() {
       if (response.ok) {
         console.log("Course created:", data);
         setSuccessMessage("Course created!");
-        // set((prevCourses) => [...prevCourses, data]);  If using a global state for courses
       } else {
         console.log("Backend error:", data);
         setErrorMessage("Course creation failed.");
