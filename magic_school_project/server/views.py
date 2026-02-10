@@ -67,6 +67,7 @@ def logout_user(request):
 
 # View to list all users.
 @api_view(['GET'])
+@permission_classes([IsAuthenticated])
 def user_list_view(request):
     if request.method == 'GET':
         users = User.objects.all()
@@ -75,6 +76,7 @@ def user_list_view(request):
 
 # View to get a user to update or delete if requesting user is an admin.
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def user_detail_view(request, pk):
     try:
         user = User.objects.get(pk=pk)
@@ -105,7 +107,8 @@ def user_detail_view(request, pk):
 
 # View to list all courses and create a new course.
 @api_view(['GET', 'POST'])
-def course_list_view(request):
+@permission_classes([IsAuthenticated])
+def course_list_view(request):   
     if request.method == 'GET':
         courses = Course.objects.all()
         serializer = CourseSerializer(courses, many=True)
@@ -113,17 +116,20 @@ def course_list_view(request):
     
     # Create a new course if the user is a teacher or admin.
     elif request.method == 'POST':
-        if request.user.role in [User.Role.TEACHER, User.Role.ADMIN]:
-            serializer = CourseSerializer(data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data, status=201)
-            return Response(serializer.errors, status=400)
-        else:
-            return Response({'error': 'Only teachers and admins can create courses.'}, status=403)
+        if request.user.role not in [User.Role.TEACHER, User.Role.ADMIN]:
+          return Response({'error': 'Only teachers and admins can create courses.'}, status=403)
+
+    serializer = CourseSerializer(data=request.data)
+
+    if serializer.is_valid():
+        serializer.save(teacher=request.user)
+        return Response(serializer.data, status=201)
+
+    return Response(serializer.errors, status=400)
     
 # View to update or delete a course if the user is a teacher or admin.
 @api_view(['GET', 'PUT', 'DELETE'])
+@permission_classes([IsAuthenticated])
 def course_detail_view(request, pk):
     try:
         course = Course.objects.get(pk=pk)
@@ -153,6 +159,7 @@ def course_detail_view(request, pk):
 
 # View to enroll a student in a course
 @api_view(['POST'])
+@permission_classes([IsAuthenticated])
 def enroll_student(request, course_id):
     try:
         course = Course.objects.get(pk=course_id)

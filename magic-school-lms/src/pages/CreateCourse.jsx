@@ -5,24 +5,26 @@ import AuthContext from '../context/AuthContext';
 
 // Page for creating a new course
 export default function CreateCourse() {
-  const { user } = useContext(AuthContext);
+  const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const [courseTitle, setCourseTitle] = useState("Enter course title here");
   const [courseDescription, setCourseDescription] = useState("Enter course description here");
-  const [successMessage, setSuccessMessage] = useState("");
-  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   const addCourse = async () => {
     const courseDetails = {
-      title: courseTitle,
-      description: courseDescription,
+      course_title: courseTitle,
+      course_description: courseDescription,
     };
     try {
+      console.log("Access token:", tokens?.access);
       const response = await fetch("http://127.0.0.1:8000/api/courses/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${tokens?.access}`,
         },
         body: JSON.stringify(courseDetails),
       });
@@ -31,6 +33,9 @@ export default function CreateCourse() {
         console.log("Course created:", data);
         setSuccessMessage("Course created!");
         // set((prevCourses) => [...prevCourses, data]);  If using a global state for courses
+      } else {
+        console.log("Backend error:", data);
+        setErrorMessage("Course creation failed.");
       }
     } catch (error) {
       console.error("Error creating course:", error);
@@ -59,9 +64,9 @@ export default function CreateCourse() {
         onDescriptionChange={(e) => setCourseDescription(e.target.value)}
         buttonText="Create Course" onPrimaryClick={addCourse}
         secondButtonText="Cancel" onCancelClick={handleCancel}
-        successMessage={successMessage}
-        errorMessage={errorMessage}
       />
+      {successMessage && <p className="success-message">{successMessage}</p>}
+      {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
   );
 };

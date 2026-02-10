@@ -52,6 +52,7 @@ class UserLoginSerializer(serializers.Serializer):
 # Serializer for Course model including enrolled students
 class CourseSerializer(serializers.ModelSerializer):
     enrolled_students = UserSerializer(many=True, read_only=True)
+    teacher = serializers.PrimaryKeyRelatedField(read_only=True)
     
     class Meta:
         model = Course
