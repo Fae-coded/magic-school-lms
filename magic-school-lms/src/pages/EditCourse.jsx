@@ -8,7 +8,7 @@ export default function EditCourse() {
   const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { id } = useParams();  // Get course ID from URL params, don't think this will work?
+  const { id } = useParams();  // Get course ID from URL params
   const [courseTitle, setCourseTitle] = useState();
   const [courseDescription, setCourseDescription] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
@@ -41,10 +41,8 @@ export default function EditCourse() {
       }
     };
     
-    if (id) {
       fetchCourse();
-    }
-  }, [id, tokens]);
+  }, [id, tokens?.access]);
 
   const editCourse = async (id) => {
     const courseDetails = {
