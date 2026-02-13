@@ -12,6 +12,7 @@ import CreateCourse from './pages/CreateCourse.jsx';
 import EditCourse from './pages/EditCourse.jsx';
 import AdminDashboard from './pages/Admin.jsx';
 import ManageUsers from './pages/ManageUsers.jsx';
+import DeleteCourse from './pages/DeleteCourse.jsx';
 import App from './App.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 import { AuthProvider } from "./context/AuthContext";
@@ -46,10 +47,10 @@ const router = createBrowserRouter(createRoutesFromElements(
         <EditCourse />
       </ProtectedRoute>} />
 
-    {/*<Route path= "/delete-course/:id" element= {
+    <Route path= "/delete-course/:id" element= {
       <ProtectedRoute allowedRoles={["teacher", "admin"]}>
         <DeleteCourse/>
-      <ProtectedRoute/>} /> */}
+      </ProtectedRoute>} />
 
     <Route path="/admin" element={
       <ProtectedRoute allowedRoles={["admin"]}>

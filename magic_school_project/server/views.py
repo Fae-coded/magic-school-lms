@@ -141,21 +141,21 @@ def course_detail_view(request, pk):
         return Response(serializer.data)
 
     elif request.method == 'PUT':
-        if request.user.role in [User.Role.TEACHER, User.Role.ADMIN]:
+        if request.user == course.teacher or request.user.role == User.Role.ADMIN:
             serializer = CourseSerializer(course, data=request.data)
             if serializer.is_valid():
                 serializer.save()
                 return Response(serializer.data)
             return Response(serializer.errors, status=400)
         else:
-            return Response({'error': 'Only teachers and admins can update courses.'}, status=403)
+            return Response({'error': 'Only the teacher or an admin can update this course.'}, status=403)
 
     elif request.method == 'DELETE':
-        if request.user.role in [User.Role.TEACHER, User.Role.ADMIN]:
+        if request.user == course.teacher or request.user.role == User.Role.ADMIN:
             course.delete()
             return Response(status=204)
         else:
-            return Response({'error': 'Only teachers and admins can delete courses.'}, status=403)
+            return Response({'error': 'Only the teacher or an admin can delete this course.'}, status=403)
 
 # View to enroll a student in a course
 @api_view(['POST'])
