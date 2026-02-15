@@ -22,15 +22,16 @@ export default function NavBar() {
 
             {user?.role === "teacher" &&( 
                 <>
-                  <Link to="/teacher" className="navbar-link">Manage Courses</Link>
                   <Link to="/create-course" className="navbar-link">Create Course</Link>
+                  <Link to="/teacher" className="navbar-link">Manage Courses</Link>
+                  
                 </>
             )}
 
             {user?.role === "admin" && (
                 <>
-                  <Link to="/admin" className="navbar-link">Manage Courses</Link>
                   <Link to="/create-course" className="navbar-link">Create Course</Link>
+                  <Link to="/admin" className="navbar-link">Manage Courses</Link>
                   <Link to="/manage-users" className="navbar-link">Manage Users</Link>
                 </>
             )}

@@ -1,10 +1,11 @@
 import { Card } from "../components/Card";
 import { CardContainer } from '../components/CardContainer.jsx';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from '../context/AuthContext';
 
 export default function AdminDashboard() {
-
+    const { tokens } = useContext(AuthContext)
     const navigate = useNavigate();
 
     const [courses, setCourses] = useState([]);
@@ -12,12 +13,16 @@ export default function AdminDashboard() {
     const [error, setError] = useState(null);
   
       useEffect(() => {
-          fetchCourses();
-      }, []);
-  
-      const fetchCourses = async () => {
+        if (!tokens?.access) return;
+
+        const fetchCourses = async () => {
           try {
-              const response = await fetch('http://127.0.0.1:8000/api/courses/');
+              const response = await fetch('http://127.0.0.1:8000/api/courses/',
+                {
+                    headers: {
+                        "Authorization": `Bearer ${tokens?.access}`,
+            },
+          });
               if (!response.ok) {
                   throw new Error(`HTTP error! status: ${response.status}`);
               }
@@ -31,6 +36,8 @@ export default function AdminDashboard() {
               setLoading(false);
           }
       }
+        fetchCourses();
+      }, [tokens]);
 
 
   return (
