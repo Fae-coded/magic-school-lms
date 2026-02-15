@@ -70,14 +70,23 @@ def logout_user(request):
 @permission_classes([IsAuthenticated])
 def user_list_view(request):
     if request.method == 'GET':
-        users = User.objects.all()
+        if request.user.role != User.Role.ADMIN:
+          return Response(
+            {"error": "Only admins can view users."},
+            status=403
+        )
+          
+        users = User.objects.exclude(role=User.Role.ADMIN)
         serializer = UserSerializer(users, many=True)
         return Response(serializer.data)
 
 # View to get a user to update or delete if requesting user is an admin.
-@api_view(['GET', 'PUT', 'DELETE'])
+@api_view(['GET', 'PATCH', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def user_detail_view(request, pk):
+    if request.user.role != User.Role.ADMIN:
+        return Response({"error": "Admins only"}, status=403)
+    
     try:
         user = User.objects.get(pk=pk)
     except User.DoesNotExist:
@@ -87,22 +96,16 @@ def user_detail_view(request, pk):
         serializer = UserSerializer(user)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
-        if request.user.role == User.Role.ADMIN:
-            serializer = UserSerializer(user, data=request.data)
-            if serializer.is_valid():
-                serializer.save()
-                return Response(serializer.data)
-            return Response(serializer.errors, status=400)
-        else:
-            return Response({'error': 'Only admins can update users.'}, status=403)
+    elif request.method == 'PATCH':
+        serializer = UserSerializer(user, data=request.data, partial=(request.method == 'PATCH'))
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=400)
 
     elif request.method == 'DELETE':
-        if request.user.role == User.Role.ADMIN:
-            user.delete()
-            return Response(status=204)
-        else:
-            return Response({'error': 'Only admins can delete users.'}, status=403)
+        user.delete()
+        return Response(status=204)
 
 
 # View to list all courses and create a new course.
