@@ -9,8 +9,8 @@ export default function EditCourse() {
   const navigate = useNavigate();
 
   const { id } = useParams();  // Get course ID from URL params
-  const [courseTitle, setCourseTitle] = useState();
-  const [courseDescription, setCourseDescription] = useState();
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDescription, setCourseDescription] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -62,6 +62,13 @@ export default function EditCourse() {
       if (response.ok) {
         console.log("Course edited:", data);
         setSuccessMessage("Course updated");
+        setTimeout(() => {
+          if (user.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/teacher");
+          }
+        }, 2000);
       }
     } catch (error) {
       console.error("Error editing course:", error);

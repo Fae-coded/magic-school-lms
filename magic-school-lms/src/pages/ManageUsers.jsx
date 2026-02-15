@@ -48,7 +48,7 @@ export default function ManageUsers() {
       {loading && <p>Loading users...</p>}
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
       {!loading && !error && users.length > 0 ? (
-                users.filter(user => user.role !== "admin").map((user) => (
+                users.map((user) => (
                     <Card
                         key={user.id}
                         title={user.username}
@@ -62,5 +62,3 @@ export default function ManageUsers() {
     </CardContainer>
   );
 }
-
-//Exclude admin role from users view user.role !== "admin"
