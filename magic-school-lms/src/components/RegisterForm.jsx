@@ -1,10 +1,7 @@
 import '../components/form.css';
 import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
 
 export default function RegisterForm() {
-
-  const navigate = useNavigate();
 
     const [formData, setFormData] = useState({
         username: '',
@@ -41,14 +38,18 @@ export default function RegisterForm() {
             console.log("Response status:", response.status);
             if (response.ok) {
                 setSuccessMessage('Registration successful!');
-                navigate('/login');
+                setTimeout(() => {
+                  window.location.reload() 
+                }, 2000);
+
+                            
             } else {
                 setErrorMessage('Registration failed. Please try again.');
             }
         } catch (error) {
             if (error.response) {
                 console.error('Error response:', error.response);
-                setErrorMessage('Registration failed. Please check your input and try again.');
+                setErrorMessage('Registration failed. Please check your credentials.');
             }
         } finally {
             setIsLoading(false);
