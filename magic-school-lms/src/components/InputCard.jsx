@@ -8,6 +8,7 @@ export function InputCard({
     email,
     onEmailChange,
     role,
+    onRoleChange,
     buttonText,
     onPrimaryClick,
     secondButtonText,
@@ -34,16 +35,18 @@ export function InputCard({
                 name="email"
             />}
 
-            {role && <p
+            {role && <select
                 className="card-role"
                 value={role}
-                name="role"
-            />}
+                onChange={onRoleChange}
+                name="role">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+            }
 
             <button className="card-button" onClick={onPrimaryClick}>{buttonText}</button>
             <button className="second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
         </div>
     );
 }
-
-//Option to change a default student user to a teacher - checkbox or something else?
