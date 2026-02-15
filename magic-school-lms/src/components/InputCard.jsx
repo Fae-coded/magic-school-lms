@@ -5,6 +5,9 @@ export function InputCard({
     onTitleChange,
     description,
     onDescriptionChange,
+    email,
+    onEmailChange,
+    role,
     buttonText,
     onPrimaryClick,
     secondButtonText,
@@ -18,14 +21,29 @@ export function InputCard({
                 onChange={onTitleChange}
                 name="title"
             />
-            <textarea
+            {description && <textarea
                 className="card-content"
                 value={description}
                 onChange={onDescriptionChange}
                 name="description"
-            />
+            />}
+            {email && <input
+                className="card-email"
+                value={email}
+                onChange={onEmailChange}
+                name="email"
+            />}
+
+            {role && <p
+                className="card-role"
+                value={role}
+                name="role"
+            />}
+
             <button className="card-button" onClick={onPrimaryClick}>{buttonText}</button>
             <button className="second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
         </div>
     );
 }
+
+//Option to change a default student user to a teacher - checkbox or something else?

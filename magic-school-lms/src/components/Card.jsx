@@ -3,6 +3,7 @@ import './Card.css';
 export function Card({
     title,
     description,
+    roleText,
     buttonText,
     secondButtonText,
     onButtonClick,
@@ -12,6 +13,9 @@ export function Card({
         <div className="card">
             <h2 className="card-title">{title}</h2>
             <p className="card-content">{description}</p>
+            {roleText && (
+                <p className="role-text">{roleText}</p>
+            )}
             <button className="card-button" onClick = {onButtonClick} >{buttonText} </button>
             {secondButtonText && onSecondButtonClick && (
                 <button className="second-card-button" onClick = {onSecondButtonClick} >{secondButtonText}</button>)}
