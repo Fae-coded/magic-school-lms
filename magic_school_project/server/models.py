@@ -20,6 +20,9 @@ class User(AbstractUser):
         default=Role.STUDENT
     )
     
+    class Meta:
+        ordering = ['role', 'username']
+    
     objects = CustomUserManager()  # Use custom manager
 
 # Returns the ID of a substitute teacher when a teacher is deleted.
