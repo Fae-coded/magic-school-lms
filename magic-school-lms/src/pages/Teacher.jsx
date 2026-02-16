@@ -17,8 +17,7 @@ export default function TeacherDashboard() {
         
         const fetchTeacherCourses = async () => {
         try {
-            console.log("Token being sent:", tokens?.access);
-            const response = await fetch('http://127.0.0.1:8000/api/teacher/courses/',
+            const response = await fetch('http://127.0.0.1:8000/api/teachers/courses/',
                 {
                     headers: {
                         "Authorization": `Bearer ${tokens?.access}`,
