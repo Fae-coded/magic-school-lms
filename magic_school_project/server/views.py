@@ -114,7 +114,7 @@ def user_detail_view(request, pk):
 def course_list_view(request):   
     if request.method == 'GET':
         courses = Course.objects.all()
-        serializer = CourseSerializer(courses, many=True)
+        serializer = CourseSerializer(courses, many=True, context={'request': request})
         return Response(serializer.data)
     
     # Create a new course if the user is a teacher or admin.
@@ -122,7 +122,7 @@ def course_list_view(request):
         if request.user.role not in [User.Role.TEACHER, User.Role.ADMIN]:
           return Response({'error': 'Only teachers and admins can create courses.'}, status=403)
 
-    serializer = CourseSerializer(data=request.data)
+        serializer = CourseSerializer(data=request.data)
 
     if serializer.is_valid():
         serializer.save(teacher=request.user)
@@ -181,7 +181,7 @@ def enroll_student(request, course_id):
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def my_courses(request):
-    serializer = StudentCoursesSerializer(request.user)
+    serializer = StudentCoursesSerializer(request.user, context={'request': request})
     return Response(serializer.data)
 
 # View to get all of a teacher's courses

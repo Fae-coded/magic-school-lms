@@ -7,7 +7,8 @@ export function Card({
     buttonText,
     secondButtonText,
     onButtonClick,
-    onSecondButtonClick
+    onSecondButtonClick,
+    buttonDisabled
 }) {
     return (
         <div className="card">
@@ -16,7 +17,9 @@ export function Card({
             {roleText && (
                 <p className="role-text">{roleText}</p>
             )}
-            <button className="card-button" onClick = {onButtonClick} >{buttonText} </button>
+            <button className="card-button" 
+            onClick = {onButtonClick}
+            disabled={buttonDisabled} >{buttonText} </button>
             {secondButtonText && onSecondButtonClick && (
                 <button className="second-card-button" onClick = {onSecondButtonClick} >{secondButtonText}</button>)}
         </div>

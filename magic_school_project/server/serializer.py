@@ -50,10 +50,19 @@ class UserLoginSerializer(serializers.Serializer):
 class CourseSerializer(serializers.ModelSerializer):
     enrolled_students = UserSerializer(many=True, read_only=True)
     teacher = serializers.PrimaryKeyRelatedField(read_only=True)
+    is_enrolled = serializers.SerializerMethodField()
     
     class Meta:
         model = Course
-        fields = ['id', 'course_title', 'course_description', 'teacher', 'enrolled_students']
+        fields = ['id', 'course_title', 'course_description', 'teacher', 'enrolled_students', 'is_enrolled']
+        
+    def get_is_enrolled(self, obj):
+        request = self.context.get('request')
+        
+        if not request or not request.user.is_authenticated:
+            return False
+        
+        return obj.enrolled_students.filter(id=request.user.id).exists()
 
 # Serializer for listing a student's enrolled courses
 class StudentCoursesSerializer(serializers.ModelSerializer):
