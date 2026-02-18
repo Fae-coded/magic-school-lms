@@ -7,8 +7,6 @@ import AuthContext from '../context/AuthContext';
 export default function NavBar() {
     const { user, logout, isAuthenticated } = useContext(AuthContext);
 
-/* <button className="navbar-button">Your Courses</button> */
-
     return (
         <div className="navbar">
             <img src={crest} alt="Strixhaven University Crest" className="navbar-crest"/>
@@ -35,13 +33,14 @@ export default function NavBar() {
                   <Link to="/manage-users" className="navbar-link">Manage Users</Link>
                 </>
             )}
-
+            <div className="navbar-login-details">
             {isAuthenticated ? (
                 <>
                   <h4 className="navbar-welcome">Welcome {user.username}</h4>
                   <Link className="navbar-logout" onClick={logout}>Logout</Link> 
                 </>
             ) : (<Link to="/login-register" className="navbar-login">Login/Register</Link>)}
+            </div>
         </div>
     );
 }

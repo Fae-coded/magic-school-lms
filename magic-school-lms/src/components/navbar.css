@@ -1,39 +1,43 @@
 .navbar {
     display: flex;
+    flex-direction: row;
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100vw;
+    width: 100%;
 }
 
 .navbar-crest{
-    float: left;
+    
     padding: 15px 20px;
-    width: 225px;
+    width: 220px;
     height: auto;
 }
 
-.navbar-button {
-    
+.navbar-link {
     width: fit-content;
     height: fit-content;
     padding: 15px 20px;
-    margin-top: 15px;;
+    margin: 20px 15px;
     border-radius: 10px;
     font-size: 25px;
-    background-image: linear-gradient(135deg, #E3D3E4 0%, #218380 100%);
-    color: #785080;
+    background-color: #218380;
+    /* background-image: linear-gradient(135deg, #E3D3E4 0%, #218380 100%); */
 }
 
+.navbar-login-details{
+    display: flex;
+    position: absolute;
+    right: 0; 
+}
 .navbar-welcome {
-    float: right;
-    margin-left: auto;
+    width: fit-content;
+    height: fit-content;
     font-size: 25px;
     color: #E3D3E4;
 }
 
-.navbar-login {
-    float: right;
+.navbar-login, .navbar-logout {
     width: fit-content;
     height: fit-content;
     padding: 15px 20px;
@@ -42,3 +46,5 @@
     font-size: 25px;
     background-color: #218380;
 }
+
+/* add on hovers to links */
