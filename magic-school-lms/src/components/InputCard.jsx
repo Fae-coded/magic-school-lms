@@ -22,20 +22,22 @@ export function InputCard({
                 onChange={onTitleChange}
                 name="title"
             />
-            {description && <textarea
+            {onDescriptionChange && <textarea  
                 className="card-content"
                 value={description}
                 onChange={onDescriptionChange}
                 name="description"
+                // use rows and cols to set size and consider resize: none
+
             />}
-            {email && <input
+            {onEmailChange && <input
                 className="card-email"
                 value={email}
                 onChange={onEmailChange}
                 name="email"
             />}
 
-            {role && <select
+            {onRoleChange && <select
                 className="card-role"
                 value={role}
                 onChange={onRoleChange}
