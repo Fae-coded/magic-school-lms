@@ -1,12 +1,14 @@
 // CardContainer component to hold multiple Card components
-import { Card } from './Card.jsx';
+import './CardContainer.css';
 
 
 export function CardContainer({ containerTitle, children }) {
   return (
+    <>
+    <h1 className="container-title">{containerTitle}</h1>
     <div className="card-container">
-        <h1 className="container-title">{containerTitle}</h1>
         {children}        
     </div>
+    </>
   );
 }
