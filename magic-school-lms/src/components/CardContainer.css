@@ -1,5 +1,6 @@
 .card-container{
-    overflow-y: scroll;
+    overflow-y: auto;
+    overflow-x: hidden;
     height: 690px;
 }
 
@@ -7,20 +8,17 @@
   width: 10px;
 }
 
-/* Track */
 ::-webkit-scrollbar-track {
   background: #451A58;
   box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 5px;
 }
 
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: #82439F;
   border-radius: 5px;
 }
 
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #af5bd6;
 }

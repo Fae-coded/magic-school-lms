@@ -1,5 +1,5 @@
 label {
-    color: #E3D3E4;
+    color: #ffffff;
     font-size: 18px;
     
 }
@@ -39,13 +39,9 @@ button :hover {
 }
 
 p {
-    color: #E3D3E4;
+    color: #ffffff;
     font-size: 16px;
     text-align: center;
-}
-a:hover {
-    color: #36d1cc;
-    text-decoration: none;
 }
 
 .form-container {
@@ -60,7 +56,7 @@ a:hover {
 
 .form-title {
     text-align: center;
-    color: #E3D3E4;
+    color: #ffffff;
     font-size: 28px;
     margin: 15px 0px 20px;;
 }
