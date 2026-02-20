@@ -8,8 +8,8 @@ export default function CreateCourse() {
   const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const [courseTitle, setCourseTitle] = useState("Enter course title here");
-  const [courseDescription, setCourseDescription] = useState("Enter course description here");
+  const [courseTitle, setCourseTitle] = useState("");
+  const [courseDescription, setCourseDescription] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -32,6 +32,13 @@ export default function CreateCourse() {
       if (response.ok) {
         console.log("Course created:", data);
         setSuccessMessage("Course created!");
+        setTimeout(() => {
+          if (user.role === "admin") {
+            navigate("/admin");
+          } else {
+            navigate("/teacher");
+          }
+        }, 2000);
       } else {
         console.log("Backend error:", data);
         setErrorMessage("Course creation failed.");
