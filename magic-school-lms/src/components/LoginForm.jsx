@@ -45,8 +45,8 @@ export default function LoginForm() {
 
       if (response.ok) {
         login(data.user, data.tokens);
-        // console.log("Login successful, user:", data.user, data.tokens);
         setSuccessMessage('Login successful!');
+        setTimeout(() => {
         if (data.user.role === 'teacher') {
           navigate('/teacher');
         } else if (data.user.role === 'admin') {
@@ -54,6 +54,7 @@ export default function LoginForm() {
         } else {
           navigate('/student');
         }
+        }, 1000);
       } else {
         setErrorMessage('Login failed. Please try again.');
       }
