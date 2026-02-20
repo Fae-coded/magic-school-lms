@@ -1,4 +1,4 @@
-import './Card.css';
+import './InputCard.css';
 
 export function InputCard({
     title,
@@ -17,28 +17,30 @@ export function InputCard({
     return (
         <div className="card">
             <input
-                className="card-title"
+                className="input-card-title"
                 value={title}
                 onChange={onTitleChange}
+                placeholder='Enter course title here'
                 name="title"
             />
             {onDescriptionChange && <textarea  
-                className="card-content"
+                className="input-card-content"
                 value={description}
                 onChange={onDescriptionChange}
+                placeholder='Enter course description here'
                 name="description"
-                // use rows and cols to set size and consider resize: none
-
+                rows="7"
+                cols="50"            
             />}
             {onEmailChange && <input
-                className="card-email"
+                className="input-card-email"
                 value={email}
                 onChange={onEmailChange}
                 name="email"
             />}
 
             {onRoleChange && <select
-                className="card-role"
+                className="input-card-role"
                 value={role}
                 onChange={onRoleChange}
                 name="role">
@@ -47,8 +49,8 @@ export function InputCard({
                 </select>
             }
 
-            <button className="card-button" onClick={onPrimaryClick}>{buttonText}</button>
-            <button className="second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
+            <button className="input-card-button" onClick={onPrimaryClick}>{buttonText}</button>
+            <button className="input-second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
         </div>
     );
 }

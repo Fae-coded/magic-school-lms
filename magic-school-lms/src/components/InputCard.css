@@ -1,0 +1,68 @@
+.input-card {
+    width: 700px;
+    height: fit-content;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    background-color: #82439F;
+    margin: 20px 10px;
+}
+
+.input-card-title, .input-card-role, .input-card-email {
+    text-align: left;
+    align-items: left;
+    display: flex;
+    padding: 10px;
+    margin: 10px 5px;
+    color: #ffffff;
+    background-color: #451A58;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+}
+
+.input-card-title::placeholder, .input-card-content::placeholder {
+  opacity: 0.5;
+  color: #E3D3E4;
+  font-size: 16px;
+}
+
+.input-card-title:focus, .input-card-role:focus, .input-card-email:focus{
+    outline: none;
+    border: #E3D3E4 2px solid;
+}
+
+.input-card-content{
+    display:block;
+    height: fit-content;
+    width: 65%;
+    color: #ffffff;
+    background-color: #451A58;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: inherit;
+    padding: 10px;
+    border: none;
+    resize: vertical;
+
+}
+
+.input-card-content:focus{
+    outline: none;
+    border: #E3D3E4 2px solid;
+}
+
+.input-card-button, .input-second-card-button {
+    text-align: center;
+    width: 30%;
+    position: relative;
+    left: 500px;
+    margin-top: 15px;
+    display: block;
+    font-size: 20px;
+    background-color: #E3D3E4;
+    color: #82439F;
+}
+
+.input-card-button:hover, .input-second-card-button:hover{
+    background-color: #dbb8df;
+}
