@@ -39,7 +39,7 @@ export default function NavBar() {
                   <h4 className="navbar-welcome">Welcome {user.username}</h4>
                   <Link className="navbar-logout" onClick={logout}>Logout</Link> 
                 </>
-            ) : (<Link to="/login-register" className="navbar-login">Login/Register</Link>)}
+            ) : (<Link to="/login-register" className="navbar-login">Login / Register</Link>)}
             </div>
         </div>
     );

@@ -21,9 +21,9 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
+  /* background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
   background-size: cover;
-  background-position: center;
+  background-position: center; */
 }
 
 h1 {
@@ -32,12 +32,28 @@ h1 {
   color: #ffffff;
 }
 
+h3 {
+  color: #ffffff;
+}
+
 button {
-  border-radius: 10px;
-  border: 1px solid transparent;
-  padding: 10px 5px;
-  font-size: 1em;
-  font-weight: 500;
   font-family: inherit;
   cursor: pointer;
 }
+
+.login-register-link {
+  display: inline-block;
+  width: fit-content;
+    height: fit-content;
+    padding: 15px 20px;
+    margin: 10px;
+    border-radius: 10px;
+    font-size: 25px;
+    background-color: #218380;
+}
+
+/* style text selection */
+/* ::selection {
+  background-color: #82439F;
+  color: #ffffff;
+} */

@@ -11,12 +11,12 @@ export default function Form() {
     <div className="form-container">
       {isLogin ? <> 
       <LoginForm /> 
-      <p>Not enrolled yet? <a href="#" onClick={()=> setIsLogin(false)}>Register here!</a></p>
+      <p>Not enrolled yet? <a href="#" className="form-link" onClick={()=> setIsLogin(false)}>Register here!</a></p>
       </>
       : 
       <>
       <RegisterForm />
-      <p>Enrolled already? <a href="#" onClick={()=> setIsLogin(true)}>Login here!</a></p>
+      <p>Enrolled already? <a href="#" className="form-link" onClick={()=> setIsLogin(true)}>Login here!</a></p>
       </>
      }
      </div>

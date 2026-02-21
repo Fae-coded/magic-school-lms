@@ -14,6 +14,15 @@
     height: auto;
 }
 
+@keyframes fadeInNav {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
 .navbar-link {
     width: fit-content;
     height: fit-content;
@@ -22,11 +31,13 @@
     border-radius: 10px;
     font-size: 25px;
     background-color: #218380;
-    /* background-image: linear-gradient(135deg, #E3D3E4 0%, #218380 100%); */
+    animation: fadeInNav 0.05s ease-in 1s forwards;
+    opacity: 0;
 }
 
 .navbar-link:hover, .navbar-login:hover, .navbar-logout:hover{
     background-color: #165553;
+    color:#a8a8a8;
 }
 
 .navbar-login-details{
@@ -39,6 +50,8 @@
     height: fit-content;
     font-size: 25px;
     color: #ffffff;
+    animation: fadeInNav 0.05s ease-in 1s forwards;
+    opacity: 0;
 }
 
 .navbar-login, .navbar-logout {
@@ -49,6 +62,10 @@
     border-radius: 10px;
     font-size: 25px;
     background-color: #218380;
+    
 }
 
-/* add on hovers to links */
+.navbar-logout{
+    animation: fadeInNav 0.05s ease-in 1s forwards;
+    opacity: 0;
+}
