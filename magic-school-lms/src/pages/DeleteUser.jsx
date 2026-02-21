@@ -86,6 +86,7 @@ export default function DeleteUser() {
   return (
     <div className="delete-user-page">
       <h1>Please confirm you wish to delete this user?</h1>
+      <div className="delete-user-card">
       <Card
         title={userUsername}
         description={userEmail}
@@ -95,6 +96,7 @@ export default function DeleteUser() {
         secondButtonText="Cancel"
         onSecondButtonClick={handleCancel} 
         />
+        </div>
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>

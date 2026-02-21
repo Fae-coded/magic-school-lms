@@ -33,7 +33,7 @@ button{
     font-size: 18px;
 }
 
-button :hover {
+button:hover {
     background-color: #a38aa5;
     color: #451A58;
 }
@@ -59,6 +59,11 @@ p {
     color: #ffffff;
     font-size: 28px;
     margin: 15px 0px 20px;;
+}
+
+.form-link:hover {
+    color: #451A58;
+
 }
 
 .success-message {

@@ -93,6 +93,7 @@ export default function DeleteCourse() {
   return (
     <div className="delete-course-page">
       <h1>Please confirm you wish to delete this course?</h1>
+      <div className="delete-course-card">
       <Card
         title={courseTitle}
         description={courseDescription}
@@ -101,6 +102,7 @@ export default function DeleteCourse() {
         secondButtonText="Cancel"
         onSecondButtonClick={handleCancel} 
         />
+        </div>
         {successMessage && <p className="success-message">{successMessage}</p>}
         {errorMessage && <p className="error-message">{errorMessage}</p>}
     </div>
