@@ -2,10 +2,6 @@
   font-family: 'Book Antiqua', 'Palatino', 'Palatino Linotype', Georgia, serif;
   line-height: 1.5;
   font-weight: 400;
-  background-color: rgb(53, 53, 53);
-  background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
-  background-size: cover;
-  background-position: center;
 }
 
 a {
@@ -21,9 +17,50 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  /* background-image: url("magic-school-lms/src/assets/strixhaven-campus.webp");
+  background-color: rgb(43, 20, 44);
+}
+
+@keyframes fadeInNav {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* Role-based backgrounds */
+body.bg-home {
+  background-image: url('./assets/strixhaven-campus.webp');
   background-size: cover;
-  background-position: center; */
+  background-position: center;
+}
+
+body.bg-student {
+  background-image: url('./assets/student-background.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(43, 20, 44);
+  /* animation: fadeInNav 0.05s ease-in 1s forwards;
+  opacity: 0; */
+}
+
+body.bg-teacher {
+  background-image: url('./assets/teacher-background.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(43, 20, 44);
+  /* animation: fadeInNav 0.05s ease-in 1s forwards;
+  opacity: 0; */
+}
+
+body.bg-admin {
+  background-image: url('./assets/admin-background.webp');
+  background-size: cover;
+  background-position: center;
+  background-color: rgb(43, 20, 44);
+  /* animation: fadeInNav 0.05s ease-in 1s forwards;
+  opacity: 0; */
 }
 
 h1 {
@@ -52,8 +89,22 @@ button {
     background-color: #218380;
 }
 
-/* style text selection */
-/* ::selection {
-  background-color: #82439F;
+.login-register-link:hover {
+    background-color: #1B5E6B;
+    color: #a8a8a8;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 20px;
+  background-color: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+::selection {
+  background-color: rgba(0, 0, 0, 0.5);
   color: #ffffff;
-} */
+}
