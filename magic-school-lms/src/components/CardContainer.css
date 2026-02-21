@@ -1,7 +1,10 @@
 .card-container{
     overflow-y: auto;
     overflow-x: hidden;
+    width: fit-content;
     height: 690px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 0px 0px 10px 10px;
 }
 
 ::-webkit-scrollbar {
@@ -24,7 +27,9 @@
 }
 
 .container-title{
-    margin: 80px 0px 15px;
+    margin: 80px 0px 0px;
+    padding: 15px 20px;
     color: #ffffff;
-
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px 10px 0px 0px;
 }

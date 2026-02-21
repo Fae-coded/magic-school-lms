@@ -1,4 +1,5 @@
 import { InputCard } from "../components/InputCard";
+import "../components/InputCardContainer.css";
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
@@ -87,7 +88,7 @@ export default function EditUser() {
     };
 
   return (
-    <div className="edit-course-page">
+    <div className="edit-user-page">
       <h1>Edit User Details:</h1>
       <InputCard
         title={userUsername}

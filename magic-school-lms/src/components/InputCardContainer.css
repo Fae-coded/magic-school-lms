@@ -1,0 +1,6 @@
+.edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: fit-content;
+    padding: 5px 5px;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+}

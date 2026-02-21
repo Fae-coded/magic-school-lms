@@ -1,4 +1,5 @@
 import { Card } from '../components/Card.jsx';
+import "../components/InputCardContainer.css";
 import { useState, useEffect, useContext } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import AuthContext from '../context/AuthContext';
