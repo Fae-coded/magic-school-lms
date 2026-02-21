@@ -17,7 +17,7 @@ export function Card({
             {roleText && (
                 <p className="role-text">{roleText}</p>
             )}
-            <button className="card-button" 
+            <button className={`card-button ${buttonDisabled ? 'card-button--enrolled' : ''}`} 
             onClick = {onButtonClick}
             disabled={buttonDisabled} >{buttonText} </button>
             {secondButtonText && onSecondButtonClick && (

@@ -55,6 +55,7 @@ export default function StudentCourses() {
                         title={course.course_title}
                         description={course.course_description}
                         buttonText="Enrolled"
+                        buttonDisabled={true}
                     />
                 ))
             ) : (
