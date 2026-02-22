@@ -3,6 +3,8 @@ import './Card.css';
 export function Card({
     title,
     description,
+    username,
+    email,
     roleText,
     buttonText,
     secondButtonText,
@@ -12,10 +14,23 @@ export function Card({
 }) {
     return (
         <div className="card">
-            <h2 className="card-title">{title}</h2>
-            <p className="card-content">{description}</p>
+            {title &&
+            (<h2 className="card-title">{title}</h2>)}
+
+            {description && (
+                <p className="card-description">{description}</p>
+            )}
+
+            {username && (
+                <p className="card-username">{username}</p>
+            )}
+
+            {email && (
+                <p className="card-email">{email}</p>
+            )}
+
             {roleText && (
-                <p className="role-text">{roleText}</p>
+                <p className="card-role">{roleText}</p>
             )}
             <button className={`card-button ${buttonDisabled ? 'card-button--enrolled' : ''}`} 
             onClick = {onButtonClick}

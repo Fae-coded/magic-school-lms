@@ -51,8 +51,8 @@ export default function ManageUsers() {
                 users.map((user) => (
                     <Card
                         key={user.id}
-                        title={user.username}
-                        description={user.email}
+                        username={user.username}
+                        email={user.email}
                         roleText={user.role}
                         buttonText="Edit User" onButtonClick={() => navigate(`/edit-user/${user.id}`)}
                         secondButtonText="Delete User" onSecondButtonClick={() => navigate(`/delete-user/${user.id}`)}
