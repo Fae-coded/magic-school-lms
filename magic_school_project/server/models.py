@@ -9,6 +9,12 @@ class CustomUserManager(UserManager):
 
 # Custom User model with roles
 class User(AbstractUser):
+    email = models.EmailField(
+        unique=True,
+        blank=False,
+        null=False
+    )
+    
     class Role(models.TextChoices):
         STUDENT = 'student', 'Student'
         TEACHER = 'teacher', 'Teacher'
@@ -31,7 +37,7 @@ def get_substitute_teacher():
 
 # Course model with assigned teacher and enrolled students
 class Course(models.Model):
-    course_title = models.CharField(max_length=100)
+    course_title = models.CharField(max_length=75)
     course_description = models.TextField()
     teacher = models.ForeignKey(User, on_delete=models.SET(get_substitute_teacher), limit_choices_to={'role': User.Role.TEACHER})
     enrolled_students = models.ManyToManyField(User, related_name='courses', limit_choices_to={'role': User.Role.STUDENT})

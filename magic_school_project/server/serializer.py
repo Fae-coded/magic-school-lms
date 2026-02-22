@@ -5,12 +5,30 @@ from django.contrib.auth.password_validation import validate_password
 
 # Serializer for User model
 class UserSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
+    
     class Meta:
         model = User
         fields = ['username','first_name', 'email', 'role', 'id']
-        
+    
+    def validate_email(self, value):
+        if not value or value.strip() == '':
+            raise serializers.ValidationError("Email cannot be empty.")
+        user_id = self.instance.id if self.instance else None
+        if User.objects.filter(email=value).exclude(id=user_id).exists():
+            raise serializers.ValidationError("Email already exists.")
+        return value
+    
+    def validate(self, attrs):
+        if not attrs.get('email') or attrs['email'].strip() == '':
+            raise serializers.ValidationError("Email cannot be empty.")
+        if self.instance and 'email' not in self.initial_data:
+            raise serializers.ValidationError({'email': 'Email cannot be removed.'})
+        return attrs
+    
 #Serializer for user registration
 class UserRegistrationSerializer(serializers.ModelSerializer):
+    email = serializers.EmailField(required=True)
     password = serializers.CharField(write_only=True)
     
     class Meta:
@@ -19,9 +37,11 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         extra_kwargs = {'password': {'write_only': True}}
         
     def validate_email(self, value):
-      if User.objects.filter(email=value).exists():
+        if not value:
+            raise serializers.ValidationError("Email is required.")
+        if User.objects.filter(email=value).exists():
           raise serializers.ValidationError("Email already exists.")
-      return value
+        return value
       
     def validate_password(self, value):
         validate_password(value)
@@ -48,6 +68,8 @@ class UserLoginSerializer(serializers.Serializer):
 
 # Serializer for Course model including enrolled students
 class CourseSerializer(serializers.ModelSerializer):
+    course_title = serializers.CharField(min_length=5, max_length=75)
+    course_description = serializers.CharField(min_length=10)
     enrolled_students = UserSerializer(many=True, read_only=True)
     teacher = serializers.PrimaryKeyRelatedField(read_only=True)
     is_enrolled = serializers.SerializerMethodField()
