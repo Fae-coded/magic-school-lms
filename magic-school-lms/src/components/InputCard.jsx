@@ -5,6 +5,8 @@ export function InputCard({
     onTitleChange,
     description,
     onDescriptionChange,
+    username,
+    onUsernameChange,
     email,
     onEmailChange,
     role,
@@ -16,30 +18,67 @@ export function InputCard({
 }) {
     return (
         <div className="card">
+            {onTitleChange &&
+            <label className= "input-card-title-label"> Course Title:
+                <br></br>
             <input
                 className="input-card-title"
                 value={title}
                 onChange={onTitleChange}
                 placeholder='Enter course title here'
                 name="title"
+                minLength={5}
+                maxLength={75}
+                required
             />
-            {onDescriptionChange && <textarea  
+            </label>}
+
+            {onDescriptionChange && 
+            <label className= "input-card-description-label">Course Description:
+                <br></br>
+                <textarea  
                 className="input-card-content"
                 value={description}
                 onChange={onDescriptionChange}
                 placeholder='Enter course description here'
                 name="description"
-                rows="7"
-                cols="50"            
-            />}
-            {onEmailChange && <input
+                rows="6"
+                cols="50"
+                minLength={10}
+                maxLength={300}
+                required           
+            />
+            </label>}
+
+            {onUsernameChange && 
+            <label className= "input-card-username-label">Username:
+            <br></br>
+            <input
+                className="input-card-username"
+                value={username}
+                onChange={onUsernameChange}
+                name="username"
+                required
+            />
+            </label>}
+
+
+            {onEmailChange && 
+            <label className= "input-card-email-label">Email:
+            <br></br>
+            <input
                 className="input-card-email"
                 value={email}
                 onChange={onEmailChange}
                 name="email"
-            />}
+                required
+            />
+            </label>}
 
-            {onRoleChange && <select
+            {onRoleChange && 
+            <label className= "input-card-role-label">Role:
+            <br></br>
+            <select
                 className="input-card-role"
                 value={role}
                 onChange={onRoleChange}
@@ -47,6 +86,7 @@ export function InputCard({
                     <option value="student">Student</option>
                     <option value="teacher">Teacher</option>
                 </select>
+            </label>
             }
 
             <button className="input-card-button" onClick={onPrimaryClick}>{buttonText}</button>
