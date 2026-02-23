@@ -10,7 +10,9 @@ export default function BackgroundProvider() {
     
     // Add the appropriate class based on user role
     if (user?.role) {
+      setTimeout(() => {
       body.classList.add(`bg-${user.role}`);
+      }, 1000);
     } else {
     // Default background for non-logged in users
       body.classList.add('bg-home'); 

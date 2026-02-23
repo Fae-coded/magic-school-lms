@@ -57,10 +57,17 @@ export default function LoginForm() {
         }, 1000);
       } else {
         setErrorMessage('Login failed. Please try again.');
+        setTimeout(() => {      
+                  setErrorMessage(null);
+                }, 5000);
       }
     } catch (error) {
       if (error.response) {
         console.error('Error response:', error.response?.data);
+        setErrorMessage('Login failed. Please check your credentials.');
+                setTimeout(() => {      
+                  setErrorMessage(null);
+                }, 5000);
       }
     } finally {
       setIsLoading(false);

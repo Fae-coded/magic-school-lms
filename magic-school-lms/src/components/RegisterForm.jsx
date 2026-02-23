@@ -45,11 +45,17 @@ export default function RegisterForm() {
                             
             } else {
                 setErrorMessage('Registration failed. Please try again.');
+                setTimeout(() => {      
+                  setErrorMessage(null);
+                }, 5000);
             }
         } catch (error) {
             if (error.response) {
                 console.error('Error response:', error.response);
                 setErrorMessage('Registration failed. Please check your credentials.');
+                setTimeout(() => {      
+                  setErrorMessage(null);
+                }, 5000);
             }
         } finally {
             setIsLoading(false);
