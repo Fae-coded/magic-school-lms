@@ -19,12 +19,6 @@ export default function DeleteUser() {
 
   // Fetch current user data on mount
   useEffect(() => {
-    // if(isLoading) {
-    //       return;
-    //     }
-
-    //     setIsLoading(true);
-
     if (!id || !tokens?.access) return;
     const fetchUser = async () => {
       try {
@@ -53,6 +47,7 @@ export default function DeleteUser() {
     
   }, [id, tokens?.access]);
 
+  // Sends DELETE request to delete user
   const deleteUser = async (id) => {
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}/`, {
@@ -77,6 +72,7 @@ export default function DeleteUser() {
     }
   };
 
+  // Resets form and navigates back to manage users page
   const handleCancel = () => {
     setUserUsername("");
     setUserEmail("");
@@ -89,8 +85,8 @@ export default function DeleteUser() {
       <h1>Please confirm you wish to delete this user?</h1>
       <div className="delete-user-card">
       <Card
-        title={userUsername}
-        description={userEmail}
+        username={userUsername}
+        email={userEmail}
         roleText= {userRole}
         buttonText="Yes, delete this user"
         onButtonClick={() => deleteUser(id)} 
@@ -103,5 +99,3 @@ export default function DeleteUser() {
     </div>
   );
 };
-
-// disabled={isLoading}
