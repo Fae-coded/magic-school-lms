@@ -29,7 +29,22 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(user));
   };
 
-  const logout = () => {
+  const logout = async () => {
+    if (auth.tokens?.refresh) {
+      try {
+        await fetch("http://localhost:8000/api/logout/", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+             Authorization: `Bearer ${auth.tokens?.access}`,
+          },
+          body: JSON.stringify({ refresh: auth.tokens.refresh }),
+        });
+      } catch (e) {
+        console.error("Logout request failed:", e);
+      }
+    }
+    
     setAuth({ user: null, tokens: null });
     localStorage.removeItem("authTokens");
     localStorage.removeItem("user");
