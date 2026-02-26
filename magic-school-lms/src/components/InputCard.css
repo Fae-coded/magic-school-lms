@@ -3,37 +3,50 @@
     height: fit-content;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
     background-color: #82439F;
+    padding: 20px;
     margin: 20px 10px;
 }
 
 .input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-role-label, .input-card-email-label, .input-card-role-label {
     text-align: left;
     align-items: left;
-    display: block;
     color: #ffffff;
-    font-size: 18px;
+    font-size: 20px;
     font-family: inherit;
-    margin: 15px 0px 0px;
 }
 
-.input-card-username, .input-card-title, .input-card-role, .input-card-email {
+.input-card-username, .input-card-title, .input-card-email{
     text-align: left;
     align-items: left;
-    display: flex;
     padding: 10px;
     margin: 5px 5px 10px;
     color: #ffffff;
     background-color: #451A58;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
+    font-family: inherit;
+    width: 80%;
+    height: fit-content;
+}
+
+.input-card-role{
+    width: fit-content;
+    color: #ffffff;
+    background-color: #451A58;
+    border-radius: 5px;
+    font-size: 20px;
     font-family: inherit;
 }
 
 .input-card-title::placeholder, .input-card-content::placeholder {
   opacity: 0.5;
   color: #E3D3E4;
-  font-size: 16px;
+  font-size: 20px;
 }
 
 .input-card-username:focus, .input-card-title:focus, .input-card-role:focus, .input-card-email:focus{
@@ -42,13 +55,12 @@
 }
 
 .input-card-content{
-    display:block;
     height: fit-content;
-    width: 65%;
+    width: 100%;
     color: #ffffff;
     background-color: #451A58;
     border-radius: 5px;
-    font-size: 16px;
+    font-size: 20px;
     font-family: inherit;
     padding: 10px;
     border: none;
@@ -63,10 +75,9 @@
 
 .input-card-button, .input-second-card-button {
     text-align: center;
-    width: 30%;
-    position: relative;
-    left: 500px;
-    margin-top: 15px;
+    width: 100%;
+    height: fit-content;
+    margin: 0px 0px 10px;
     display: block;
     font-size: 20px;
     background-color: #E3D3E4;

@@ -17,7 +17,7 @@ export function InputCard({
     onCancelClick
 }) {
     return (
-        <div className="card">
+        <div className="input-card">
             {onTitleChange &&
             <label className= "input-card-title-label"> Course Title:
                 <br></br>
@@ -33,23 +33,6 @@ export function InputCard({
             />
             </label>}
 
-            {onDescriptionChange && 
-            <label className= "input-card-description-label">Course Description:
-                <br></br>
-                <textarea  
-                className="input-card-content"
-                value={description}
-                onChange={onDescriptionChange}
-                placeholder='Enter course description here'
-                name="description"
-                rows="6"
-                cols="50"
-                minLength={10}
-                maxLength={300}
-                required           
-            />
-            </label>}
-
             {onUsernameChange && 
             <label className= "input-card-username-label">Username:
             <br></br>
@@ -58,19 +41,6 @@ export function InputCard({
                 value={username}
                 onChange={onUsernameChange}
                 name="username"
-                required
-            />
-            </label>}
-
-
-            {onEmailChange && 
-            <label className= "input-card-email-label">Email:
-            <br></br>
-            <input
-                className="input-card-email"
-                value={email}
-                onChange={onEmailChange}
-                name="email"
                 required
             />
             </label>}
@@ -89,8 +59,43 @@ export function InputCard({
             </label>
             }
 
+            <div className= "input-card-button-container">
             <button className="input-card-button" onClick={onPrimaryClick}>{buttonText}</button>
             <button className="input-second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
+            </div>
+
+            {onDescriptionChange && 
+            <label className= "input-card-description-label">Course Description:
+                <br></br>
+                <textarea  
+                className="input-card-content"
+                value={description}
+                onChange={onDescriptionChange}
+                placeholder='Enter course description here'
+                name="description"
+                rows="6"
+                cols="40"
+                minLength={10}
+                maxLength={300}
+                required           
+            />
+            </label>}
+
+            {onEmailChange && 
+            <label className= "input-card-email-label">Email:
+            <br></br>
+            <input
+                className="input-card-email"
+                value={email}
+                onChange={onEmailChange}
+                name="email"
+                required
+            />
+            </label>}
+
+            
+
+            
         </div>
     );
 }

@@ -1,7 +1,7 @@
 .card-container{
     overflow-y: auto;
     overflow-x: hidden;
-    width: fit-content;
+    width: auto;
     height: 690px;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 0px 0px 10px 10px;
