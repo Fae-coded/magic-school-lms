@@ -1,18 +1,10 @@
 .navbar {
-    
     display: flex;
     flex-direction: row;
     position: absolute;
     top: 0px;
     left: 0px;
     width: 100%;
-}
-
-.navbar-crest{
-    
-    padding: 15px 20px;
-    width: 200px;
-    height: auto;
 }
 
 @keyframes fadeInNav {
@@ -25,12 +17,6 @@
 }
 
 .navbar-link {
-    width: fit-content;
-    height: fit-content;
-    padding: 15px 20px;
-    margin: 20px 15px;
-    border-radius: 10px;
-    font-size: 25px;
     background-color: #218380;
     animation: fadeInNav 0.05s ease-in 1s forwards;
     opacity: 0;
@@ -43,8 +29,11 @@
 
 .navbar-login-details{
     display: flex;
-    position: absolute;
-    right: 0; 
+    flex-direction: row;
+    margin-left: auto;
+    margin-right: 10px;
+    /* position: absolute;
+    right: 0;  */
 }
 .navbar-welcome {
     background-color: rgba(0, 0, 0, 0.5);
@@ -74,4 +63,157 @@
     border-radius: 0px 10px 10px 0px;
     animation: fadeInNav 0.05s ease-in 1s forwards;
     opacity: 0;
+}
+
+@media only screen and (max-width: 600px) {
+     .navbar-crest{    
+    padding: 10px 5px;
+    width: 70px;
+    height: auto;
+}
+
+.navbar-link {
+    width: fit-content;
+    height: fit-content;
+    padding: 5px 5px;
+    margin: 15px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.navbar-welcome {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 10px;
+    margin-top: 15px;
+    font-size: 15px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.navbar-login, .navbar-logout {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 10px;
+    margin: 15px 10px 0px 0px;
+    font-size: 15px;
+}
+
+.navbar-logout{
+    border-radius: 0px 5px 5px 0px;
+}
+}
+
+@media only screen and (min-width: 600px) {
+    
+}
+
+@media only screen and (min-width: 768px) {
+     .navbar-crest{    
+    padding: 10px 10px;
+    width: 110px;
+    height: auto;
+}
+
+.navbar-link {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 10px;
+    margin: 15px 5px;
+    border-radius: 5px;
+    font-size: 15px;
+}
+
+.navbar-welcome {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 10px;
+    margin-top: 15px;
+    font-size: 15px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.navbar-login, .navbar-logout {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 10px;
+    margin: 15px 10px 0px 0px;
+    font-size: 15px;
+}
+
+.navbar-logout{
+    border-radius: 0px 5px 5px 0px;
+}
+}
+
+@media only screen and (min-width: 900px) {
+    .navbar-crest{    
+    padding: 10px 15px;
+    width: 140px;
+    height: auto;
+}
+
+.navbar-link {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+    margin: 15px 5px;
+    border-radius: 7px;
+    font-size: 20px;
+}
+
+.navbar-welcome {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+    margin-top: 15px;
+    font-size: 20px;
+    border-radius: 7px 0px 0px 7px;
+}
+
+.navbar-login, .navbar-logout {
+    width: fit-content;
+    height: fit-content;
+    padding: 10px 15px;
+    margin: 15px 15px 0px 0px;
+    font-size: 20px;
+}
+
+.navbar-logout{
+    border-radius: 0px 7px 7px 0px;
+}
+}
+
+@media only screen and (min-width: 1200px) {
+    .navbar-crest{
+    padding: 15px 20px;
+    width: 200px;
+    height: auto;
+}
+
+.navbar-link {
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 20px;
+    margin: 20px 15px;
+    border-radius: 10px;
+    font-size: 25px;
+}
+
+.navbar-welcome {
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 10px;
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.navbar-login, .navbar-logout {
+    width: fit-content;
+    height: fit-content;
+    padding: 15px 20px;
+    margin: 20px 20px 0px 0px;
+    font-size: 25px;
+}
+
+
 }

@@ -15,7 +15,7 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 100vw;
   min-height: 100vh;
   background-color: rgb(43, 20, 44);
 }
@@ -34,6 +34,7 @@ body.bg-home {
   background-image: url('./assets/strixhaven-campus.webp');
   background-size: cover;
   background-position: center;
+  background-repeat: no-repeat;
   background-color: rgb(43, 20, 44);
 }
 
@@ -41,7 +42,8 @@ body.bg-student {
   background-image: url('./assets/student-background.webp');
   background-size: cover;
   background-position: center;
-  background-color: rgb(43, 20, 44);
+  background-repeat: no-repeat;
+  background-color: rgb(253, 251, 253);
   animation: fadeInNav 0.05s ease-in 1s forwards;
   opacity: 0;
 }
@@ -50,7 +52,8 @@ body.bg-teacher {
   background-image: url('./assets/teacher-background.webp');
   background-size: cover;
   background-position: center;
-  background-color: rgb(43, 20, 44);
+  background-repeat: no-repeat;
+  background-color: rgb(43, 33, 59);
   animation: fadeInNav 0.05s ease-in 1s forwards;
   opacity: 0;
 }
@@ -59,7 +62,8 @@ body.bg-admin {
   background-image: url('./assets/admin-background.webp');
   background-size: cover;
   background-position: center;
-  background-color: rgb(43, 20, 44);
+  background-repeat: no-repeat;
+  background-color: rgb(184, 179, 165);
   animation: fadeInNav 0.05s ease-in 1s forwards;
   opacity: 0;
 }
@@ -82,4 +86,22 @@ button {
 ::selection {
   background-color: rgba(0, 0, 0, 0.5);
   color: #ffffff;
+}
+
+@media only screen and (max-width: 600px) {
+  h1 {
+  font-size: 2.5em;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+  h1 {
+  font-size: 2.5em;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+  h1 {
+  font-size: 2.5em;
+  }
 }

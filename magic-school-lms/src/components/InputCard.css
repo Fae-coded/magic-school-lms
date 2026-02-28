@@ -12,12 +12,21 @@
     margin: 20px 10px;
 }
 
-.input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-role-label, .input-card-email-label, .input-card-role-label {
+.input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-email-label {
     text-align: left;
     align-items: left;
     color: #ffffff;
     font-size: 20px;
     font-family: inherit;
+}
+
+.input-card-role-label{
+    text-align: left;
+    color: #ffffff;
+    font-size: 20px;
+    font-family: inherit;
+    margin-left: 5px;
+
 }
 
 .input-card-username, .input-card-title, .input-card-email{
@@ -30,7 +39,7 @@
     border-radius: 5px;
     font-size: 20px;
     font-family: inherit;
-    width: 80%;
+    width: 90%;
     height: fit-content;
 }
 
@@ -86,4 +95,146 @@
 
 .input-card-button:hover, .input-second-card-button:hover{
     background-color: #dbb8df;
+}
+
+@media only screen and (max-width: 600px) {
+    .input-card {
+    width: auto;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 15px 5px;
+  }
+
+  .input-card-title-label,  .input-card-username-label, .input-card-role-label, .input-card-email-label {
+    font-size: 16px;
+    width: 50%;
+  }
+  
+  .input-card-description-label {
+    font-size: 16px;
+    width: 100%;
+  }
+
+  .input-card-username, .input-card-title, .input-card-email{
+    font-size: 16px;
+    width: 95%;
+  }
+
+  .input-card-role{
+    font-size: 16px;
+  }
+
+  .input-card-content{
+    font-size: 16px;
+    width: 75%;
+  }
+
+  .input-card-title::placeholder, .input-card-content::placeholder {
+    font-size: 16px;
+  }
+
+  .input-card-button, .input-second-card-button {
+    font-size: 16px;
+    width: fit-content;
+  }
+}
+
+@media only screen and (min-width: 600px) {
+    .input-card {
+    width: 500px;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-role-label, .input-card-email-label, .input-card-role-label {
+    font-size: 18px;
+    width: 50%;
+  }
+
+  .input-card-username, .input-card-title, .input-card-email{
+    font-size: 18px;
+  }
+
+  .input-card-role{
+    font-size: 18px;
+  }
+
+  .input-card-content{
+    font-size: 18px;
+  }
+
+  .input-card-title::placeholder, .input-card-content::placeholder {
+    font-size: 18px;
+  }
+
+  .input-card-button, .input-second-card-button {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (min-width: 768px) {
+    .input-card {
+    width: 600px;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+    .input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-email-label, .input-card-role-label {
+    font-size: 18px;
+    width: 50%;
+  }
+
+    .input-card-username, .input-card-title, .input-card-email{
+    font-size: 18px;
+  }
+
+  .input-card-role{
+    font-size: 18px;
+  }
+
+  .input-card-content{
+    font-size: 18px;
+  }
+
+  .input-card-title::placeholder, .input-card-content::placeholder {
+    font-size: 18px;
+  }
+
+  .input-card-button, .input-second-card-button {
+    font-size: 18px;
+  }
+}
+
+@media only screen and (min-width: 900px) {
+    .input-card {
+    width: 700px;
+    height: fit-content;
+    border-radius: 7px;
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+
+}
+
+@media only screen and (min-width: 1200px) {
+    .input-card {
+    width: 750px;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 10px;
+  }
+
+  .input-card-title-label, .input-card-description-label, .input-card-username-label, .input-card-role-label, .input-card-email-label, .input-card-role-label {
+    font-size: 20px;
+    width: 50%;
+  }
+
+
 }

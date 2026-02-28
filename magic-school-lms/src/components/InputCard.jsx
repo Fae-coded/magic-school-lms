@@ -45,20 +45,6 @@ export function InputCard({
             />
             </label>}
 
-            {onRoleChange && 
-            <label className= "input-card-role-label">Role:
-            <br></br>
-            <select
-                className="input-card-role"
-                value={role}
-                onChange={onRoleChange}
-                name="role">
-                    <option value="student">Student</option>
-                    <option value="teacher">Teacher</option>
-                </select>
-            </label>
-            }
-
             <div className= "input-card-button-container">
             <button className="input-card-button" onClick={onPrimaryClick}>{buttonText}</button>
             <button className="input-second-card-button" onClick={onCancelClick}>{secondButtonText}</button>
@@ -93,9 +79,19 @@ export function InputCard({
             />
             </label>}
 
-            
-
-            
+            {onRoleChange && 
+            <label className= "input-card-role-label">Role:
+            <br></br>
+            <select
+                className="input-card-role"
+                value={role}
+                onChange={onRoleChange}
+                name="role">
+                    <option value="student">Student</option>
+                    <option value="teacher">Teacher</option>
+                </select>
+            </label>
+            }            
         </div>
     );
 }

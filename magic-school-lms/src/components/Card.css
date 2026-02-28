@@ -67,3 +67,146 @@
 .delete-user-page, .delete-course-page{
     padding: 10px 10px;
 }
+
+@media only screen and (max-width: 600px) {
+    .card {
+    width: auto;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px 5px;
+    }
+
+    .card-title{
+        width: 50%;
+        height: fit-content;
+        font-size: 18px;
+    }
+
+    .card-description, .card-username, .card-email, .card-role {
+        width: 50%;
+        height: fit-content;
+        font-size: 16px;
+    }
+
+    .card-button, .second-card-button {
+        width: 40%; 
+        height: fit-content;
+        font-size: 16px;
+        padding: 5px 5px;
+        
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .card {
+    width: auto;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 10px 5px;
+    }
+
+    .card-title{
+        width: 50%;
+        height: fit-content;
+        font-size: 18px;
+    }
+
+    .card-description, .card-username, .card-email, .card-role {
+        width: 50%;
+        height: fit-content;
+        font-size: 16px;
+    }
+
+    .card-button, .second-card-button {
+        width: 40%; 
+        height: fit-content;
+        font-size: 16px;
+        padding: 5px 5px;
+        
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .card {
+    width: auto;
+    height: fit-content;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 15px 10px;
+    }
+
+    .card-title{
+        width: 50%;
+        height: fit-content;
+        font-size: 20px;
+    }
+
+    .card-description, .card-username, .card-email, .card-role {
+        width: 50%;
+        height: fit-content;
+        font-size: 18px;
+    }
+
+    .card-button, .second-card-button {
+        width: 40%; 
+        height: fit-content;
+        font-size: 18px;
+        padding: 10px 10px;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .card {
+    width: auto;
+    height: fit-content;
+    border-radius: 7px;
+    padding: 10px;
+    margin: 20px 10px;
+    }
+
+    .card-title,.card-description{
+        width: 50%;
+        height: fit-content;
+    }
+
+    .card-username, .card-email, .card-role {
+        width: 50%;
+        height: fit-content;
+        font-size: 20px;
+    }
+
+    .card-button, .second-card-button {
+        width: 40%; 
+        height: fit-content;
+        font-size: 20px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .card {
+    width: auto;
+    height: fit-content;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 20px 10px;
+    }
+
+    .card-title,.card-description{
+        width: 50%;
+        height: fit-content;
+    }
+
+    .card-username, .card-email, .card-role {
+        width: 50%;
+        height: fit-content;
+        font-size: 20px;
+    }
+
+    .card-button, .second-card-button {
+        width: 40%; 
+        height: fit-content;
+        font-size: 20px;
+    }
+}

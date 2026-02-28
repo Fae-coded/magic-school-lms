@@ -33,3 +33,65 @@
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px 10px 0px 0px;
 }
+
+@media only screen and (max-width: 600px) {
+  .card-container{
+    width: 400px;
+    height: 720px;
+    }
+
+    .container-title{
+    margin: 70px 0px 0px;
+    padding: 10px 20px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+  .card-container{
+    width: 400px;
+    height: 720px;
+    }
+
+    .container-title{
+    margin: 70px 0px 0px;
+    padding: 10px 20px;
+    }  
+}
+
+@media only screen and (min-width: 768px) {
+  .card-container{
+    width: 520px;
+    height: 630px;
+    }
+
+    .container-title{
+    margin: 70px 0px 0px;
+    padding: 10px 20px;
+    }
+}
+
+
+@media only screen and (min-width: 900px) {
+  .card-container{
+    width: 690px;
+    height: 630px;
+    font-size: 18px;
+    }
+
+    .container-title{
+    margin: 70px 0px 0px;
+    padding: 10px 20px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .card-container{
+    width: 800px;
+    height: 690px;
+    }
+
+    .container-title{
+    margin: 80px 0px 0px;
+    padding: 15px 20px;
+    }
+}

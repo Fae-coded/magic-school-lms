@@ -4,3 +4,28 @@
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 10px;
 }
+
+@media only screen and (max-width: 600px) {
+     .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: 400px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+}
+
+@media only screen and (min-width: 768px) {
+}
+
+@media only screen and (min-width: 900px) {
+}
+
+@media only screen and (min-width: 1200px) {
+    .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: fit-content;
+    padding: 5px 5px;
+    border-radius: 10px;
+    }
+}
