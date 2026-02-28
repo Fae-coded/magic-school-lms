@@ -9,7 +9,7 @@ export default function EditUser() {
   const { tokens } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { id } = useParams();  // Get user ID from URL params
+  const { id } = useParams();
   const [userUsername, setUserUsername] = useState("");
   const [userEmail, setUserEmail] = useState("");
   const [userRole, setUserRole] = useState("");
@@ -53,7 +53,6 @@ export default function EditUser() {
       username: userUsername,
       email: userEmail,
       role: userRole
-      //make sure these match backend
     };
     try {
       const response = await fetch(`http://localhost:8000/api/users/${id}/`, {
@@ -64,15 +63,26 @@ export default function EditUser() {
         },
         body: JSON.stringify(userDetails),
       });
-      const data = await response.json();
       if (!response.ok) {
-        throw new Error("Update failed");
-      }
-      console.log("User updated:", data);
-      setSuccessMessage("User updated");
-      setTimeout(() => {
-        navigate("/manage-users");
-    }, 2000);
+        const errors = await response.json();
+        Object.keys(errors).forEach(field => {
+        const fieldErrors = errors[field];
+        const message = Array.isArray(fieldErrors)
+        ? fieldErrors[0]
+        : fieldErrors;
+        setErrorMessage(`${field}: ${message}`);
+
+        setTimeout(() => {          
+          setErrorMessage(null);
+        }, 5000);
+      });
+      } else {
+        await response.json();
+        setSuccessMessage("User updated");
+        setTimeout(() => {
+          navigate("/manage-users");
+        }, 2000);
+  }
       
     } catch (error) {
       console.error("Error editing user:", error);
@@ -80,6 +90,7 @@ export default function EditUser() {
     }
   };
 
+  //Handles cancel button click - resets form and navigates back to previous page
   const handleCancel = () => {
     setUserUsername("");
     setUserEmail("");
@@ -91,8 +102,8 @@ export default function EditUser() {
     <div className="edit-user-page">
       <h1>Edit User Details:</h1>
       <InputCard
-        title={userUsername}
-        onTitleChange={(e) => setUserUsername(e.target.value)}
+        username={userUsername}
+        onUsernameChange={(e) => setUserUsername(e.target.value)}
         email={userEmail}
         onEmailChange={(e) => setUserEmail(e.target.value)}
         role={userRole}

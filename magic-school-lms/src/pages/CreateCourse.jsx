@@ -14,13 +14,13 @@ export default function CreateCourse() {
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  //Sends POST request to create a new course
   const addCourse = async () => {
     const courseDetails = {
       course_title: courseTitle,
       course_description: courseDescription,
     };
     try {
-      // console.log("Access token:", tokens?.access);
       const response = await fetch("http://127.0.0.1:8000/api/courses/", {
         method: "POST",
         headers: {
@@ -29,8 +29,21 @@ export default function CreateCourse() {
         },
         body: JSON.stringify(courseDetails),
       });
-      const data = await response.json();
-      if (response.ok) {
+      if (!response.ok) {
+        const errors = await response.json();
+        Object.keys(errors).forEach(field => {
+        const fieldErrors = errors[field];
+        const message = Array.isArray(fieldErrors)
+        ? fieldErrors[0]
+        : fieldErrors;
+        setErrorMessage(`${field}: ${message}`);
+        
+        setTimeout(() => {          
+          setErrorMessage(null);
+        }, 5000);
+      });
+      } else {
+        const data = await response.json();
         console.log("Course created:", data);
         setSuccessMessage("Course created!");
         setTimeout(() => {
@@ -40,9 +53,6 @@ export default function CreateCourse() {
             navigate("/teacher");
           }
         }, 2000);
-      } else {
-        console.log("Backend error:", data);
-        setErrorMessage("Course creation failed.");
       }
     } catch (error) {
       console.error("Error creating course:", error);
@@ -50,6 +60,7 @@ export default function CreateCourse() {
     }
   };
 
+  //Handles cancel button click - resets form and navigates back to previous pages
   const handleCancel = () => {
     setCourseTitle("");
     setCourseDescription("");

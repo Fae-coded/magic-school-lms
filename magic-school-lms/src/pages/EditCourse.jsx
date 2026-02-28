@@ -9,7 +9,7 @@ export default function EditCourse() {
   const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { id } = useParams();  // Get course ID from URL params
+  const { id } = useParams();
   const [courseTitle, setCourseTitle] = useState("");
   const [courseDescription, setCourseDescription] = useState("");
   const [successMessage, setSuccessMessage] = useState(null);
@@ -45,6 +45,7 @@ export default function EditCourse() {
       fetchCourse();
   }, [id, tokens?.access]);
 
+  //Updates course information
   const editCourse = async (id) => {
     const courseDetails = {
       course_title: courseTitle,
@@ -59,9 +60,21 @@ export default function EditCourse() {
         },
         body: JSON.stringify(courseDetails),
       });
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Course edited:", data);
+      if (!response.ok) {
+        const errors = await response.json();
+        Object.keys(errors).forEach(field => {
+        const fieldErrors = errors[field];
+        const message = Array.isArray(fieldErrors)
+        ? fieldErrors[0]
+        : fieldErrors;
+        setErrorMessage(`${field}: ${message}`);
+
+        setTimeout(() => {          
+          setErrorMessage(null);
+        }, 5000);
+      });
+      } else {
+        await response.json();
         setSuccessMessage("Course updated");
         setTimeout(() => {
           if (user.role === "admin") {
@@ -77,6 +90,7 @@ export default function EditCourse() {
     }
   };
 
+  //Handles cancel button click - resets form and navigates back to previous pages
   const handleCancel = () => {
     setCourseTitle("");
     setCourseDescription("");
@@ -85,7 +99,7 @@ export default function EditCourse() {
     } else {
       navigate("/teacher");
     };
-    };
+  };
 
   return (
     <div className="edit-course-page">
