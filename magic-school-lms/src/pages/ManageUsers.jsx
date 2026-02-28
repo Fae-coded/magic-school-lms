@@ -58,7 +58,7 @@ export default function ManageUsers() {
                         secondButtonText="Delete User" onSecondButtonClick={() => navigate(`/delete-user/${user.id}`)}
                     />
                   ))
-          ) : (<p>No users found.</p>)}
+          ) : (<p>No users found</p>)}
     </CardContainer>
   );
 }

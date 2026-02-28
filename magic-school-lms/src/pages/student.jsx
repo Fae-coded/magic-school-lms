@@ -1,7 +1,7 @@
 import { useState, useEffect, useContext } from 'react';
 import { Card } from '../components/Card.jsx';
 import { CardContainer } from '../components/CardContainer.jsx';
-import AuthContext from '../context/AuthContext';
+import AuthContext from '../context/AuthContext.jsx';
 
 export default function StudentDashboard() {
 
@@ -94,12 +94,10 @@ export default function StudentDashboard() {
                     />
                 ))
             ) : (
-                !loading && <p>No courses available</p>
+                <p>No courses available</p>
             )}
             {successMessage && <p className="success-message">{successMessage}</p>}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
         </CardContainer>        
     );
 }
-
-//if courses.course.is_enrolled then .pop() or course.!enrolled then .map() it without the enrolled courses

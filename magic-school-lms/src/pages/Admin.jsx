@@ -54,9 +54,7 @@ export default function AdminDashboard() {
                         secondButtonText="Delete Course" onSecondButtonClick={() => navigate(`/delete-course/${course.id}`)}
                     />
                 ))
-            ) : (
-                !loading && <p>No courses available</p>
-            )}
+            ) : (<p>No courses available</p>)}
         </CardContainer>      
     );
 }

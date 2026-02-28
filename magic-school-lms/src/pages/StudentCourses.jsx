@@ -59,7 +59,7 @@ export default function StudentCourses() {
                     />
                 ))
             ) : (
-                !loading && <p>No courses available</p>
+                <p>No courses available</p>
             )}
             </CardContainer>
     );

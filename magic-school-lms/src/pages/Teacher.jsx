@@ -59,7 +59,7 @@ export default function TeacherDashboard() {
                     />
                 ))
             ) : (
-                !loading && <p>No courses available</p>
+                <p>No courses available</p>
             )}
         </CardContainer>      
     );
