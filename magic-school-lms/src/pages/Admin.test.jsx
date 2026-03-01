@@ -3,9 +3,9 @@ import { test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom'
 // import userEvent from '@testing-library/user-event'
 import { renderWithAuthContext } from '../test-utils/renderWithAuthContext.jsx';
-import { makeAdminAuth,  } from '../test-utils/authHelpers.js';
+import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/authHelpers.js';
 import Admin from './Admin.jsx';
-//makeStudentAuth, makeTeacherAuth
+import ProtectedRoute from '../components/ProtectedRoute.jsx';
 
 test('admin users can render the admin course page and loading message', () => {
   renderWithAuthContext(<Admin/>, { auth: makeAdminAuth() });
@@ -45,3 +45,30 @@ test('fetches courses with correct token and displays error message on failure',
   const errorMsg = await screen.findByText(/Network error/i);
   expect(errorMsg).toBeInTheDocument();
 });  
+
+// Other tests here!
+
+
+
+
+test('non-admin users do not see the admin page', () => {
+  const wrapped = () => (
+    <ProtectedRoute allowedRoles={["admin"]}>
+      <Admin />
+    </ProtectedRoute>
+  );
+
+  renderWithAuthContext(wrapped(), { auth: makeStudentAuth() });
+  expect(screen.getByText(/You do not have permission to view this page./i)).toBeInTheDocument();
+  expect(screen.queryByText(/Loading courses.../i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/No courses available/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Edit Course/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Delete Course/i)).not.toBeInTheDocument();
+
+  renderWithAuthContext(wrapped(), { auth: makeTeacherAuth() });
+  expect(screen.getByText(/Redirecting to teacher dashboard/i)).toBeInTheDocument();
+  expect(screen.queryByText(/Loading courses.../i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/No courses available/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Edit Course/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Delete Course/i)).not.toBeInTheDocument();
+});
