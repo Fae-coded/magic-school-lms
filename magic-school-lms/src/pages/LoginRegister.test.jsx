@@ -33,12 +33,8 @@ test('switches to register form when register link is clicked', async () => {
         </AuthProvider>);
     const registerLink = screen.getByRole('link', { name: /Register here!/i });
     await userEvent.click(registerLink);
-
-    expect(
-        screen.getByRole('heading', { name: /Register/i })).toBeInTheDocument();
-
-    expect(
-        screen.getByRole('button', { name: /register/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Register/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /register/i })).toBeInTheDocument();
 });
 
 test('switches back to login form when login link is clicked', async () => {
@@ -52,8 +48,6 @@ test('switches back to login form when login link is clicked', async () => {
     await userEvent.click(registerLink);
     const loginLink = screen.getByRole('link', { name: /Login here!/i });
     await userEvent.click(loginLink);
-
-    expect(
-        screen.getByRole('heading', { name: /Login/i })).toBeInTheDocument();
+    expect(screen.getByRole('heading', { name: /Login/i })).toBeInTheDocument();
 });
 
