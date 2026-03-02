@@ -79,3 +79,31 @@ p {
     font-weight: bold;
     text-align: center;
 }
+
+@media only screen and (max-width: 600px) {
+    .form-container {
+    width: 320px;
+    border-radius: 5px;
+    }
+}
+
+@media only screen and (min-width: 600px) {
+    .form-container {
+    width: 340px;
+    border-radius: 5px;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .form-container {
+    width: 500px;
+    border-radius: 7px;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    .form-container {
+    width: 700px;
+    border-radius: 10px;
+    }
+}

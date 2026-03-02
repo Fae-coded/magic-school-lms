@@ -102,7 +102,7 @@
     width: auto;
     height: fit-content;
     border-radius: 5px;
-    padding: 20px;
+    padding: 10px;
     margin: 15px 5px;
   }
 
@@ -118,7 +118,7 @@
 
   .input-card-username, .input-card-title, .input-card-email{
     font-size: 16px;
-    width: 95%;
+    width: 90%;
   }
 
   .input-card-role{
@@ -136,7 +136,6 @@
 
   .input-card-button, .input-second-card-button {
     font-size: 16px;
-    width: fit-content;
   }
 }
 
@@ -177,7 +176,7 @@
 
 @media only screen and (min-width: 768px) {
     .input-card {
-    width: 600px;
+    width: 500px;
     height: fit-content;
     border-radius: 5px;
     padding: 20px;

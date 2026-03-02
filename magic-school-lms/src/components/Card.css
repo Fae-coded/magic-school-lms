@@ -80,13 +80,13 @@
     .card-title{
         width: 50%;
         height: fit-content;
-        font-size: 18px;
+        font-size: 16px;
     }
 
     .card-description, .card-username, .card-email, .card-role {
         width: 50%;
         height: fit-content;
-        font-size: 16px;
+        font-size: 14px;
     }
 
     .card-button, .second-card-button {

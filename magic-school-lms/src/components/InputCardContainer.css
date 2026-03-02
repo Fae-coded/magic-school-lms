@@ -7,19 +7,34 @@
 
 @media only screen and (max-width: 600px) {
      .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
-    width: 400px;
+    width: 350px;
     padding: 5px 5px;
     border-radius: 5px;
     }
 }
 
 @media only screen and (min-width: 600px) {
+    .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: 350px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    }
 }
 
 @media only screen and (min-width: 768px) {
+    .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: fit-content;
+    padding: 5px 5px;
+    border-radius: 5px;
+    }
 }
 
 @media only screen and (min-width: 900px) {
+    .edit-course-page, .edit-user-page, .create-course-page, .delete-user-page, .delete-course-page {
+    width: fit-content;
+    padding: 5px 5px;
+    border-radius: 7px;
+    }
 }
 
 @media only screen and (min-width: 1200px) {

@@ -36,11 +36,12 @@
 
 @media only screen and (max-width: 600px) {
   .card-container{
-    width: 400px;
-    height: 720px;
+    width: 320px;
+    height: 450px;
     }
 
     .container-title{
+      width: auto;
     margin: 70px 0px 0px;
     padding: 10px 20px;
     }
