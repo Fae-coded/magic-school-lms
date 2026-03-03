@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom'
-// import userEvent from '@testing-library/user-event'
+import userEvent from '@testing-library/user-event'
 import { renderWithAuthContext } from '../test-utils/renderWithAuthContext.jsx';
 import { makeStudentAuth, makeTeacherAuth, makeAdminAuth } from '../test-utils/authHelpers.js';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
@@ -47,7 +47,23 @@ test('fetches courses with correct token and displays error message on failure',
   expect(errorMsg).toBeInTheDocument();
 });  
 
+test('enrolls in course and updates button state on click', async () => {
+  globalThis.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve([
+        {id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.', is_enrolled: false}
+      ])
+    })
+  );
 
+  renderWithAuthContext(<Student/>, { auth: makeStudentAuth() });
+  const enrollButton = await screen.findByText(/Enroll/i);
+  expect(enrollButton).toBeInTheDocument();
+  await userEvent.click(enrollButton);
+  const enrolledButton = await screen.findByText(/Enrolled/i);
+  expect(enrolledButton).toBeInTheDocument();
+});
 
 test('non-student users do not see the available courses page', () => {
   const wrapped = () => (
