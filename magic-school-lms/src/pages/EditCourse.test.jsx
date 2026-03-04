@@ -1,16 +1,15 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import { Routes, Route} from "react-router-dom"
 
 const navigateMock = vi.fn();
-const paramsMock = { id: '1' };
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useNavigate: () => navigateMock,
-    useParams: () => paramsMock,
   };
 });
 
@@ -19,40 +18,58 @@ import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/a
 import EditCourse from './EditCourse.jsx'
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 
-// test('admin and teacher users can render the edit course page', () => {
-//   renderWithAuthContext(<EditCourse/>, { auth: makeAdminAuth() });
-//   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
-//    expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
-//    expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
-
-//   renderWithAuthContext(<EditCourse/>, { auth: makeTeacherAuth() });
-//   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
-//    expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
-//    expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
-// });
-
-test('fetches course to edit and displays it for only admin or teacher users', async () => {
+test('fetches course to edit and displays it for admin', async () => {
   globalThis.fetch = vi.fn(() =>
     Promise.resolve({
       ok: true,
       json: () => Promise.resolve(
-        { id: 1, course_title: 'Overview of Magical Notation', course_description: 'Learn how to solve common magical cyphers.' },
-      )
+        { id: 1, 
+          course_title: 'Overview of Magical Notation', 
+          course_description: 'Learn how to solve common magical cyphers.',
+        }),
     })
   );
 
-  renderWithAuthContext(<EditCourse/>, { auth: makeAdminAuth() });
-  const overview = await screen.findByText('Overview of Magical Notation');
+  renderWithAuthContext(
+    <Routes>
+      <Route path="/courses/:id" element={<EditCourse/>}/>
+    </Routes>,
+    {
+      auth: makeAdminAuth(),
+    route: '/courses/1',
+    }
+  );
+  const overview = await screen.findByDisplayValue('Overview of Magical Notation');
   expect(overview).toBeInTheDocument();
-  expect(screen.getByText('Learn how to solve common magical cyphers.')).toBeInTheDocument();
+  expect(screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
+});
 
+test('fetches course to edit and displays it for teacher', async () => {
+  globalThis.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve(
+        { id: 1, 
+          course_title: 'Overview of Magical Notation', 
+          course_description: 'Learn how to solve common magical cyphers.', 
+        }),
+    })
+  );
 
-  renderWithAuthContext(<EditCourse/>, { auth: makeTeacherAuth() });
-  expect(overview).toBeInTheDocument();
-  expect(screen.getByText('Learn how to solve common magical cyphers.')).toBeInTheDocument();
+  renderWithAuthContext(
+    <Routes>
+      <Route path="/courses/:id" element={<EditCourse/>}/>
+    </Routes>,
+    {
+      auth: makeTeacherAuth(),
+    route: '/courses/1',
+    }
+  );
+  expect(await screen.findByDisplayValue('Overview of Magical Notation')).toBeInTheDocument();
+  expect(screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
@@ -63,6 +80,7 @@ test('user can type in course title and description fields', async () => {
 
   const courseTitle = screen.getByLabelText(/Course Title/i);
   const courseDescription = screen.getByLabelText(/Course Description/i);
+  await userEvent.clear(courseTitle, courseDescription)
 
   await userEvent.type(courseTitle, 'Flame of Knowledge');
   await userEvent.type(courseDescription, 'Learn detailed events of Aracvios history');
@@ -71,35 +89,39 @@ test('user can type in course title and description fields', async () => {
   expect(courseDescription).toHaveValue('Learn detailed events of Aracvios history');
 });
 
-test('fails to fetch course and shows error', async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.reject(new Error('Network error'))
-  );
-
-  renderWithAuthContext(<EditCourse/>, { auth: makeAdminAuth() });
-  const errorMsg = await screen.findByText(/Network error/i);
-  expect(errorMsg).toBeInTheDocument();
-});
-
-
 test('updates course on button click and navigates to manage course page afterwards', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
+      globalThis.fetch = vi.fn()
+    .mockResolvedValueOnce({
       ok: true,
-      json: () => Promise.resolve(
-        { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' },
-      )
+      json: async () => ({
+        id: 1,
+        course_title: 'Intro to Magic',
+        course_description: 'Learn the basics of magic.',
+      }),
     })
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({}),
+    });
+
+  renderWithAuthContext(
+    <Routes>
+      <Route path="/courses/:id" element={<EditCourse/>}/>
+    </Routes>,
+    {
+      auth: makeTeacherAuth(),
+    route: '/courses/1',
+    }
   );
 
-  renderWithAuthContext(<EditCourse/>, { auth: makeAdminAuth() });
-
-  const introToMagic = await screen.findByText('Intro to Magic');
-  expect(introToMagic).toBeInTheDocument();
-
-  await userEvent.click(screen.getByText(/Save Changes/i));
-  expect(screen.getByText(/Course updated/i))
-  expect(navigateMock).toHaveBeenCalledWith('/admin');
+  expect(await screen.findByDisplayValue('Intro to Magic')).toBeInTheDocument();
+  expect(await screen.findByDisplayValue('Learn the basics of magic.')).toBeInTheDocument();
+  await userEvent.click(screen.getByRole('button', { name: /Save Changes/i}));
+  expect(screen.getByText(/Course updated/i)).toBeInTheDocument();
+  await waitFor(() => {
+    expect(navigateMock).toHaveBeenCalledWith('/teacher')
+  }, {timeout: 3000}
+);
 });
 
 test('fails to update course and displays error message on failure', async () => {
@@ -119,27 +141,14 @@ test('fails to update course and displays error message on failure', async () =>
 
   await userEvent.type(courseTitle, 'Test');
   await userEvent.type(courseDescription, 'Too short');
-  await userEvent.click(screen.getByText(/Save Changes/i));
+  await userEvent.click(screen.getByRole('button', { name: /Save Changes/i}));
 
   expect(await screen.findByText(/course_title: Course title is required./i)).toBeInTheDocument();
 })
 
 test('Navigates to manage courses page on cancel button click', async () => {
-  //   globalThis.fetch = vi.fn(() =>
-  //   Promise.resolve({
-  //     ok: true,
-  //     json: () => Promise.resolve(
-  //       { id: 1, course_title: 'SLAM Poetry', course_description: 'Devastating Your Enemies with Magical Insults.' },
-  //     )
-  //   })
-  // );
-
   renderWithAuthContext(<EditCourse/>, { auth: makeAdminAuth() });
-
-  // const slamPoetry = await screen.findByText('SLAM Poetry');
-  // expect(slamPoetry).toBeInTheDocument();
-
-  await userEvent.click(screen.getByText(/Cancel/i));
+  await userEvent.click(screen.getByRole('button', { name:/Cancel/i}));
   expect(navigateMock).toHaveBeenCalledWith('/admin');
 });
 

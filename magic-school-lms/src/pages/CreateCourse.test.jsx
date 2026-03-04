@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, waitFor } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
@@ -17,12 +17,14 @@ import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/a
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import CreateCourse from './CreateCourse.jsx';
 
-test('admin and teacher users can render the edit course page', () => {
+test('admin user can render the create course page', () => {
   renderWithAuthContext(<CreateCourse/>, { auth: makeAdminAuth() });
   expect(screen.getByText(/New Course Creation/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Create Course/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
+});
 
+test('teacher user can render the create course page', () => {
   renderWithAuthContext(<CreateCourse/>, { auth: makeTeacherAuth() });
   expect(screen.getByText(/New Course Creation/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Create Course/i })).toBeInTheDocument();
@@ -34,6 +36,7 @@ test('user can type in course title and description fields', async () => {
 
   const courseTitle = screen.getByLabelText(/Course Title/i);
   const courseDescription = screen.getByLabelText(/Course Description/i);
+  await userEvent.clear(courseTitle, courseDescription)
 
   await userEvent.type(courseTitle, 'Flame of Knowledge');
   await userEvent.type(courseDescription, 'Learn detailed events of Aracvios history');
@@ -47,19 +50,42 @@ test('creates course on button click and navigates to manage course page afterwa
     Promise.resolve({
       ok: true,
       json: () => Promise.resolve([
-        { id: 1, course_title: 'SLAM Poetry', course_description: 'Devastating Your Enemies with Magical Insults.' },
+        { id: 1, 
+          course_title: 'SLAM Poetry', 
+          course_description: 'Devastating Your Enemies with Magical Insults.' },
       ])
     })
   );
 
   renderWithAuthContext(<CreateCourse/>, { auth: makeTeacherAuth() });
+  await userEvent.type(
+    screen.getByRole('textbox', { name: /title/i }),
+    'SLAM Poetry'
+  );
 
-  const slamPoetry = await screen.findByText('SLAM Poetry');
-  expect(slamPoetry).toBeInTheDocument();
+  await userEvent.type(
+    screen.getByRole('textbox', { name: /description/i }),
+    'Devastating Your Enemies with Magical Insults.'
+  );
 
-  await userEvent.click(screen.getByText(/Create Course/i));
+  await userEvent.click(screen.getByRole('button', { name:/Create Course/i}));
+
+expect(fetch).toHaveBeenCalledWith(
+  expect.stringContaining('/api/courses'),
+  expect.objectContaining({
+    method: 'POST',
+    body: JSON.stringify({
+      course_title: 'SLAM Poetry',
+      course_description: 'Devastating Your Enemies with Magical Insults.',
+    }),
+  })
+);
+
   expect(screen.queryByText(/Course created/i)).toBeInTheDocument();
-  expect(navigateMock).toHaveBeenCalledWith('/teacher');
+  await waitFor(() => {
+    expect(navigateMock).toHaveBeenCalledWith('/teacher')
+    }, {timeout: 3000}
+  )
 });
 
 test('fails to create course and displays error message on failure', async () => {
@@ -84,34 +110,13 @@ test('fails to create course and displays error message on failure', async () =>
   expect(await screen.findByText(/course_title: Course title is required./i)).toBeInTheDocument();
 })
 
-
-
-
-
-
-
-test('Navigates back to manage courses page on cancel button click', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
-        { id: 1, course_title: 'SLAM Poetry', course_description: 'Devastating Your Enemies with Magical Insults.' },
-      ])
-    })
-  );
-
-  renderWithAuthContext(<CreateCourse/>, { auth: makeTeacherAuth() });
-
-  const slamPoetry = await screen.findByText('SLAM Poetry');
-  expect(slamPoetry).toBeInTheDocument();
-
+test('Navigates to manage courses page on cancel button click', async () => {
+  renderWithAuthContext(<CreateCourse/>, { auth: makeAdminAuth() });
   await userEvent.click(screen.getByText(/Cancel/i));
-  expect(screen.queryByText(/Course created/i)).not.toBeInTheDocument();
-  expect(navigateMock).toHaveBeenCalledWith('/teacher');
+  expect(navigateMock).toHaveBeenCalledWith('/admin');
 });
 
-
-test('student users do not see the delete course page', () => {
+test('student users do not see the create course page', () => {
   const wrapped = () => (
     <ProtectedRoute allowedRoles={["admin", "teacher"]}>
       <CreateCourse/>
