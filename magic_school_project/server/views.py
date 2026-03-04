@@ -78,7 +78,7 @@ def user_list_view(request):
           
         users = User.objects.exclude(role=User.Role.ADMIN)
         serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        return Response(serializer.data) #status=200?
 
 # View to get a user to update or delete if requesting user is an admin.
 @api_view(['GET', 'PATCH', 'DELETE'])
