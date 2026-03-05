@@ -147,9 +147,9 @@ class UserListAPITestCase(APITestCase):
         )
         
         self.student = User.objects.create_user(
-            username= 'noskzarrosh',
-            email= 'nossk@strixhaven.com',
-            password= 'NineInchClaws',
+            username= 'aurelia',
+            email= 'aurelia@strixhaven.com',
+            password= 'FireHorse',
             role= User.Role.STUDENT
         )
         
@@ -192,7 +192,7 @@ class UserDetailAPITestCase(APITestCase):
         
         self.student = User.objects.create_user(
             username= 'noskzarrosh',
-            email= 'nossk@strixhaven.com',
+            email= 'nosk@strixhaven.com',
             password= 'NineInchClaws',
             role= User.Role.STUDENT
         )
@@ -317,9 +317,9 @@ class CourseListAPITestCase(APITestCase):
         )
         
         self.student = User.objects.create_user(
-            username= 'noskzarrosh',
-            email= 'nossk@strixhaven.com',
-            password= 'NineInchClaws',
+            username= 'zorisphinx',
+            email= 'zori@strixhaven.com',
+            password= 'ILoveStudying',
             role= User.Role.STUDENT
         )
         
@@ -402,9 +402,9 @@ class CourseDetailAPITestCase(APITestCase):
         )
         
         self.student = User.objects.create_user(
-            username= 'noskzarrosh',
-            email= 'nossk@strixhaven.com',
-            password= 'NineInchClaws',
+            username= 'zorisphinx',
+            email= 'zori@strixhaven.com',
+            password= 'ILoveStudying',
             role= User.Role.STUDENT
         )
         
@@ -514,9 +514,131 @@ class CourseDetailAPITestCase(APITestCase):
         
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-# get for logged in students courses url name enrolled-courses
+
+class EnrolledCoursesAPITestCase(APITestCase):
+    def setUp(self):
+        self.student = User.objects.create_user(
+            username= 'noskzarrosh',
+            email= 'nosk@strixhaven.com',
+            password= 'NineInchClaws',
+            role= User.Role.STUDENT
+        )
+        
+        self.other_student = User.objects.create_user(
+            username= 'zorisphinx',
+            email= 'zori@strixhaven.com',
+            password= 'ILoveStudying',
+            role= User.Role.STUDENT
+        )
+        
+        self.teacher= User.objects.create_user(
+            username= 'profbreena',
+            email= 'breena@strixhaven.com',
+            password= 'SilverQuill',
+            role= User.Role.TEACHER
+        )
+        
+        self.first_course = Course.objects.create(
+            course_title = 'SLAM Poetry: Devastating Your Enemies with Magical Insults',
+            course_description = 'Students will either learn how to taunt opponents, or actually cause harm via vicious mockery.',
+            teacher=self.teacher
+        )
+        
+        self.second_course = Course.objects.create(
+            course_title = 'S.T.E.M: Leafbinding for Beginners',
+            course_description = 'Students will either learn how to use magic to soothe and heal a wound or how to commune with Flora.',
+            teacher=self.teacher
+        )
+        
+        self.student.courses.add(self.first_course, self.second_course)
+        
+        self.url = reverse('enrolled-courses', )
+        
+    def test_student_gets_their_enrolled_courses(self):
+        self.client.force_authenticate(user=self.student)
+        response= self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['courses']), 2)
+        
+    def test_student_receives_correct_courses(self):
+        self.client.force_authenticate(user=self.student)
+        response= self.client.get(self.url)
+        
+        self.assertEqual(response.data['courses'][0]['course_title'], 'S.T.E.M: Leafbinding for Beginners')
+        self.assertEqual(response.data['courses'][1]['course_title'], 'SLAM Poetry: Devastating Your Enemies with Magical Insults')
+        
+    def test_other_student_only_gets_their_enrolled_courses(self):
+        self.client.force_authenticate(user= self.other_student)
+        response = self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data['courses']), 0)
+        
+    def test_unauthenticated_user_cannot_access(self):
+        response = self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 # get list of courses created by that teacher url name teacher-courses
+class TeacherCoursesAPITestCase(APITestCase):
+    def setUp(self):
+        self.teacher= User.objects.create_user(
+            username= 'profbreena',
+            email= 'breena@strixhaven.com',
+            password= 'SilverQuill',
+            role= User.Role.TEACHER
+        )
+        
+        self.other_teacher = User.objects.create_user(
+            username= 'profvayran',
+            email= 'vayran@strixhaven.com',
+            password= 'Prismani',
+            role= User.Role.TEACHER
+        )
+        
+        self.first_course = Course.objects.create(
+            course_title = 'SLAM Poetry: Devastating Your Enemies with Magical Insults',
+            course_description = 'Students will either learn how to taunt opponents, or actually cause harm via vicious mockery.',
+            teacher=self.teacher
+        )
+        
+        self.second_course = Course.objects.create(
+            course_title = 'S.T.E.M: Leafbinding for Beginners',
+            course_description = 'Students will either learn how to use magic to soothe and heal a wound or how to commune with Flora.',
+            teacher=self.teacher
+        )
+        
+        self.url = reverse('teacher-courses', )
+        
+    def test_teacher_gets_their_courses(self):
+        self.client.force_authenticate(user=self.teacher)
+        response= self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 2)
+        
+    def test_teacher_receives_correct_courses(self):
+        self.client.force_authenticate(user=self.teacher)
+        response= self.client.get(self.url)
+        
+        titles = [course['course_title']for course in response.data]
+        
+        self.assertIn('SLAM Poetry: Devastating Your Enemies with Magical Insults', titles)
+        self.assertIn('S.T.E.M: Leafbinding for Beginners', titles)
+        
+        
+    def test_other_teacher_only_gets_their_courses(self):
+        self.client.force_authenticate(user= self.other_teacher)
+        response = self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.data), 0)
+        
+    def test_unauthenticated_user_cannot_access(self):
+        response = self.client.get(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
 # post enrolls a student in a course url name enroll-student
 
