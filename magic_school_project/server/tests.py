@@ -1,4 +1,3 @@
-from django.test import TestCase
 from django.urls import reverse
 from server.models import User, Course
 from rest_framework.test import APITestCase
@@ -16,7 +15,7 @@ class RegisterAPITestCase(APITestCase):
         
         self.invalid_payload = {
             'username': 'aidoneus',
-            'password': 'Odette!69'
+            'password': 'Odette!1'
         }
         
         self.url = reverse('register')
@@ -609,7 +608,7 @@ class TeacherCoursesAPITestCase(APITestCase):
             teacher=self.teacher
         )
         
-        self.url = reverse('teacher-courses', )
+        self.url = reverse('teacher-courses')
         
     def test_teacher_gets_their_courses(self):
         self.client.force_authenticate(user=self.teacher)
@@ -640,8 +639,73 @@ class TeacherCoursesAPITestCase(APITestCase):
         
         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
 
-# post enrolls a student in a course url name enroll-student
 
-# class is your describe block
-# Arrange (set up data), Act (make request), Assert (check results/responses)
-# Each test in a class block must make their own request, query their own user and make their own assertions
+class EnrollStudentAPITestCase(APITestCase):
+    def setUp(self):
+        self.student = User.objects.create_user(
+            username= 'aurelia',
+            email= 'aurelia@strixhaven.com',
+            password= 'FireHorse',
+            role= User.Role.STUDENT
+        )
+        
+        self.teacher= User.objects.create_user(
+            username= 'profimbraham',
+            email= 'imbraham@strixhaven.com',
+            password= 'Quandrix',
+            role= User.Role.TEACHER
+        )
+        
+        self.admin = User.objects.create_user(
+            username= 'adminuser',
+            email= 'admin@strixhaven.com',
+            password= 'AdminPassword1',
+            role= User.Role.ADMIN
+        )
+        
+        self.first_course = Course.objects.create(
+            course_title = 'Birds of a Feather: Introduction to Recognition of Natural Patterns',
+            course_description = 'Students will learn how to apply an investigative mind.',
+            teacher=self.teacher
+        )
+        
+        self.url = reverse('enroll-student', kwargs={'course_id': self.first_course.pk})
+        
+    def test_student_enrolled_in_course_success(self):
+        self.client.force_authenticate(user= self.student)
+        response = self.client.post(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertIn(self.student, self.first_course.enrolled_students.all())
+    
+    def test_course_does_not_exist(self):
+        self.client.force_authenticate(user= self.student)
+        url = reverse('enroll-student', kwargs={'course_id': 500})
+        response= self.client.post(url)
+        
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)   
+    
+    def test_student_already_enrolled(self):
+        self.client.force_authenticate(user= self.student)
+        self.first_course.enrolled_students.add(self.student)
+        response= self.client.post(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
+    
+    def test_teacher_can_not_enroll(self):
+        self.client.force_authenticate(user= self.teacher)
+        response= self.client.post(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
+    
+    def test_admin_can_not_enroll(self):
+        self.client.force_authenticate(user= self.admin)
+        response= self.client.post(self.url)
+        
+        self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)    
+    
+    
+    def test_unauthenticated_can_not_enroll(self):
+        response= self.client.post(self.url)        
+        
+        self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)

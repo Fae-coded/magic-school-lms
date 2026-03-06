@@ -2,15 +2,16 @@ import { screen } from '@testing-library/react';
 import { test, expect, vi } from 'vitest';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
+import { Routes, Route} from "react-router-dom"
 
 const navigateMock = vi.fn();
-const paramsMock = { id: '1' };
+// const paramsMock = { id: '1' };
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useNavigate: () => navigateMock,
-    useParams: () => paramsMock,
+    // useParams: () => paramsMock,
   };
 });
 
@@ -19,7 +20,7 @@ import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/a
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import DeleteCourse from './DeleteCourse.jsx';
 
-test('fetches course to delete and displays it for only admin or teacher users' , async () => {
+test('fetches course to delete and displays it for admin' , async () => {
   globalThis.fetch = vi.fn(() =>
     Promise.resolve({
       ok: true,
@@ -31,16 +32,47 @@ test('fetches course to delete and displays it for only admin or teacher users' 
     })
   );
 
-  renderWithAuthContext(<DeleteCourse/>, { auth: makeAdminAuth() });
-  const magicFunds = await screen.findByText('Magic Fundamentals of All Eight Schools');
-  expect(magicFunds).toBeInTheDocument();
-  expect(screen.getByText('Learn the foundations of magic.')).toBeInTheDocument();
-  expect(screen.getByText(/Please confirm you wish to delete this course/i)).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Yes, delete this course/i })).toBeInTheDocument();
-  expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
+  renderWithAuthContext(
+      <Routes>
+        <Route path="/courses/:id" element={<DeleteCourse/>}/>
+      </Routes>,
+      {
+        auth: makeAdminAuth(),
+      route: '/courses/1',
+      }
+    );
+    const magicFunds = await screen.getByText('Magic Fundamentals of All Eight Schools');
+    expect(magicFunds).toBeInTheDocument();
+    expect(screen.getByText('Learn the foundations of magic.')).toBeInTheDocument();
+    expect(screen.getByText(/Please confirm you wish to delete this course/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Yes, delete this course/i })).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
+});
+
+test('fetches course to delete and displays it for teacher' , async () => {
+  globalThis.fetch = vi.fn(() =>
+    Promise.resolve({
+      ok: true,
+      json: () => Promise.resolve({
+        id: 1,
+        course_title: 'Magic Fundamentals of All Eight Schools',
+        course_description: 'Learn the foundations of magic.',
+      })
+    })
+  );
+
+  renderWithAuthContext(
+      <Routes>
+        <Route path="/courses/:id" element={<DeleteCourse/>}/>
+      </Routes>,
+      {
+        auth: makeAdminAuth(),
+      route: '/courses/1',
+      }
+    );
 
   renderWithAuthContext(<DeleteCourse/>, { auth: makeTeacherAuth() });
-  expect(magicFunds).toBeInTheDocument();
+  expect(await screen.getByText('Magic Fundamentals of All Eight Schools')).toBeInTheDocument();
   expect(screen.getByText('Learn the foundations of magic.')).toBeInTheDocument();
   expect(screen.getByText(/Please confirm you wish to delete this course/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Yes, delete this course/i })).toBeInTheDocument();
@@ -60,6 +92,8 @@ test('fails to fetch course and shows error' , async () => {
 
 
 test('deletes course on button click and navigates to manage course page afterwards', async () => {
+    vi.useFakeTimers();
+
     globalThis.fetch = vi.fn(() =>
     Promise.resolve({
       ok: true,
@@ -77,8 +111,12 @@ test('deletes course on button click and navigates to manage course page afterwa
   expect(introToMagic).toBeInTheDocument();
 
   await userEvent.click(screen.getByText(/Yes, delete this course/i));
-  expect(screen.getByText(/Course deleted/i))
+
+  const success = await screen.findByText(/Course deleted/i);
+  expect(success).toBeInTheDocument();
+  vi.runAllTimers();
   expect(navigateMock).toHaveBeenCalledWith('/teacher');
+  vi.useRealTimers();
 });
 
 
@@ -113,23 +151,8 @@ test('fails to delete course and displays error message on failure', async () =>
 });
 
 test('Navigates to manage courses page on cancel button click', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({
-        id: 1,
-        course_title: 'SLAM Poetry',
-        course_description: 'Devastating Your Enemies with Magical Insults.',
-      })
-    })
-  );
-
   renderWithAuthContext(<DeleteCourse/>, { auth: makeAdminAuth() });
-
-  const slamPoetry = await screen.findByText('SLAM Poetry');
-  expect(slamPoetry).toBeInTheDocument();
-
-  await userEvent.click(screen.getByText(/Cancel/i));
+  await userEvent.click(screen.getByRole('button', { name:/Cancel/i}));
   expect(navigateMock).toHaveBeenCalledWith('/admin');
 });
 

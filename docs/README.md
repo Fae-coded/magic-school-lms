@@ -50,7 +50,13 @@ Additional to the backend authorization, the frontend enforces role based page a
 
 ## Testing
 
-All the screenshots for running it through HTML CSS JS and python linters
+The frontend react code has been succesfully tested with React Testing Library and Vitest:
+
+screenshot of frontend tests passing
+
+The backend Django Restframework API endpoints have been succesfully tested with APITestCase:
+![API Endpoint Tests](docs\images\API-tests-OK.jpg)
+
 
 ## Deployment
 
@@ -61,10 +67,16 @@ The live link can be found [here]()
 ## Set up guide
 
 how to set up and run the application locally
+- clone repo
+- .ven virtual environment set up
+- activate BE
+- change environment variable in fetch requests in frontend 
 
 ## Testing guide
 
 how to run the tests
+- frontend npm run test
+- backend python manage.py test
 
 ## Credits
 
