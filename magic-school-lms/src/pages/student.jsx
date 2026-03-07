@@ -53,7 +53,6 @@ export default function StudentDashboard() {
                     Authorization: `Bearer ${tokens?.access}`
                 },
             });
-            console.log("Response status:", response.status);
             if (response.ok) {
                 setCourses(prev => 
                     prev.map(course =>
@@ -65,7 +64,6 @@ export default function StudentDashboard() {
                 setTimeout(() => {
                     setSuccessMessage('Enrollment successful!');
                 }, 2000);
-                //remove course from available view
                                             
             } else {
                 setErrorMessage('Failed to enroll');

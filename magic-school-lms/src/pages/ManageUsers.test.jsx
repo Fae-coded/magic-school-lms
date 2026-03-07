@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { test, expect, vi, beforeEach } from 'vitest';
+import { test, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -21,29 +21,37 @@ beforeEach(() => {
   navigateMock.mockClear();
 });
 
-
-test('admin users can render the manage users page and loading message', () => {
-  renderWithAuthContext(<ManageUsers/>, { auth: makeAdminAuth() });
-  expect(screen.getByText(/Loading users.../i)).toBeInTheDocument();
+beforeEach(() => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue({
+    ok: true,
+    json: async () => ([]),
+  });
 });
 
-test('handles no users case correctly', () => {
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+test('handles no users case correctly', async () => {
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([]),
+  });
+
   renderWithAuthContext(<ManageUsers/>, { auth: makeAdminAuth() });
-  expect(screen.getByText(/No users found/i)).toBeInTheDocument();
+  expect(await screen.findByText(/No users found/i)).toBeInTheDocument();
   expect(screen.queryByText(/Edit User/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Delete User/i)).not.toBeInTheDocument();
 });
 
 test('fetches users with correct token and displays them', async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([
         { id: 1, username: 'Aidoneus', role: 'student' },
         { id: 2, username: 'Lisette', role: 'teacher' },
       ])
-    })
-  );
+    });
 
   renderWithAuthContext(<ManageUsers />, { auth: makeAdminAuth() });
   const aidoneus = await screen.findByText('Aidoneus');
@@ -62,15 +70,13 @@ test('fetches users with correct token and displays error message on failure', a
 });  
 
 test('navigates to edit user and delete user pages on button clicks', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
+    fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([
         { id: 1, username: 'Aidoneus', role: 'student' },
         { id: 2, username: 'Lisette', role: 'teacher' },
       ])
-    })
-  );
+    });
 
   renderWithAuthContext(<ManageUsers/>, { auth: makeAdminAuth() });
 

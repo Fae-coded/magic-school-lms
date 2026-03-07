@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react';
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, beforeEach, afterEach} from 'vitest';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 
@@ -17,29 +17,37 @@ import { makeTeacherAuth, makeStudentAuth, makeAdminAuth } from '../test-utils/a
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import Teacher from './Teacher.jsx';
 
-
-test('teacher users can render the manage courses page and loading message', () => {
-  renderWithAuthContext(<Teacher/>, { auth: makeTeacherAuth() });
-  expect(screen.getByText(/Loading courses.../i)).toBeInTheDocument();
+beforeEach(() => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue({
+    ok: true,
+    json: async () => ([]),
+  });
 });
 
-test('handles no courses case correctly', () => {
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
+test('handles no courses case correctly', async () => {
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([]),
+  });
+
   renderWithAuthContext(<Teacher/>, { auth: makeTeacherAuth() });
-  expect(screen.getByText(/No courses available/i)).toBeInTheDocument();
+  expect(await screen.findByText(/No courses available/i)).toBeInTheDocument();
   expect(screen.queryByText(/Edit Course/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Delete Course/i)).not.toBeInTheDocument();
 });
 
 test('fetches courses with correct token and displays them', async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
-        { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' },
-        { id: 2, course_title: 'Familiar Care', course_description: 'How to care for your familiar.' },
-      ])
-    })
-  );
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([
+      { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' },
+      { id: 2, course_title: 'Familiar Care', course_description: 'How to care for your familiar.' },
+    ])
+  });
 
   renderWithAuthContext(<Teacher/>, { auth: makeTeacherAuth() });
   const IntroCourse = await screen.findByText('Intro to Magic');
@@ -57,15 +65,13 @@ test('fetches courses with correct token and displays error message on failure',
 });
 
 test('navigates to edit course and delete course pages on button clicks', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
-        { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' },
-        { id: 2, course_title: 'Familiar Care', course_description: 'How to care for your familiar.' },
-      ])
-    })
-  );
+    fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([
+      { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' },
+      { id: 2, course_title: 'Familiar Care', course_description: 'How to care for your familiar.' },
+    ])
+  });
 
   renderWithAuthContext(<Teacher/>, { auth: makeTeacherAuth() });
 

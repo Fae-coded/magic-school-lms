@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { Routes, Route} from "react-router-dom"
@@ -18,17 +18,24 @@ import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/a
 import EditCourse from './EditCourse.jsx'
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 
+beforeEach(() => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue({
+    ok: true,
+    json: async () => ({}),
+  });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 test('fetches course to edit and displays it for admin', async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve(
-        { id: 1, 
-          course_title: 'Overview of Magical Notation', 
-          course_description: 'Learn how to solve common magical cyphers.',
-        }),
-    })
-  );
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      { id: 1, course_title: 'Overview of Magical Notation', course_description: 'Learn how to solve common magical cyphers.' }
+    )
+  });
 
   renderWithAuthContext(
     <Routes>
@@ -41,23 +48,19 @@ test('fetches course to edit and displays it for admin', async () => {
   );
   const overview = await screen.findByDisplayValue('Overview of Magical Notation');
   expect(overview).toBeInTheDocument();
-  expect(screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
+  expect(await screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
 });
 
 test('fetches course to edit and displays it for teacher', async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve(
-        { id: 1, 
-          course_title: 'Overview of Magical Notation', 
-          course_description: 'Learn how to solve common magical cyphers.', 
-        }),
-    })
-  );
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      { id: 1, course_title: 'Overview of Magical Notation', course_description: 'Learn how to solve common magical cyphers.' }
+    )
+  });
 
   renderWithAuthContext(
     <Routes>
@@ -69,7 +72,7 @@ test('fetches course to edit and displays it for teacher', async () => {
     }
   );
   expect(await screen.findByDisplayValue('Overview of Magical Notation')).toBeInTheDocument();
-  expect(screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
+  expect(await screen.findByDisplayValue('Learn how to solve common magical cyphers.'));
   expect(screen.getByText(/Edit Course Details/i)).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
@@ -80,8 +83,8 @@ test('user can type in course title and description fields', async () => {
 
   const courseTitle = screen.getByLabelText(/Course Title/i);
   const courseDescription = screen.getByLabelText(/Course Description/i);
-  await userEvent.clear(courseTitle, courseDescription)
-
+  await userEvent.clear(courseTitle)
+  await userEvent.clear(courseDescription)
   await userEvent.type(courseTitle, 'Flame of Knowledge');
   await userEvent.type(courseDescription, 'Learn detailed events of Aracvios history');
 
@@ -90,16 +93,13 @@ test('user can type in course title and description fields', async () => {
 });
 
 test('updates course on button click and navigates to manage course page afterwards', async () => {
-      globalThis.fetch = vi.fn()
-    .mockResolvedValueOnce({
-      ok: true,
-      json: async () => ({
-        id: 1,
-        course_title: 'Intro to Magic',
-        course_description: 'Learn the basics of magic.',
-      }),
-    })
-    .mockResolvedValueOnce({
+    fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' }
+    )
+  })
+  .mockResolvedValueOnce({
       ok: true,
       json: async () => ({}),
     });

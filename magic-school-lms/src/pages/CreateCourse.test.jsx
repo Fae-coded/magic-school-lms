@@ -1,5 +1,5 @@
 import { screen, waitFor } from '@testing-library/react';
-import { test, expect, vi } from 'vitest';
+import { test, expect, vi, beforeEach, afterEach } from 'vitest';
 import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 
@@ -16,6 +16,17 @@ import { renderWithAuthContext } from '../test-utils/renderWithAuthContext.jsx';
 import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/authHelpers.js';
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import CreateCourse from './CreateCourse.jsx';
+
+beforeEach(() => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue({
+    ok: true,
+    json: async () => ([]),
+  });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
 
 test('admin user can render the create course page', () => {
   renderWithAuthContext(<CreateCourse/>, { auth: makeAdminAuth() });
@@ -46,16 +57,14 @@ test('user can type in course title and description fields', async () => {
 });
 
 test('creates course on button click and navigates to manage course page afterwards', async () => {
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve([
-        { id: 1, 
+    fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => ([
+      { id: 1, 
           course_title: 'SLAM Poetry', 
           course_description: 'Devastating Your Enemies with Magical Insults.' },
-      ])
-    })
-  );
+    ])
+  });
 
   renderWithAuthContext(<CreateCourse/>, { auth: makeTeacherAuth() });
   await userEvent.type(
