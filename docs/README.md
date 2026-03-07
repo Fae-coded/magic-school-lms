@@ -50,11 +50,11 @@ Additional to the backend authorization, the frontend enforces role based page a
 
 ## Testing
 
-The frontend react code has been succesfully tested with React Testing Library and Vitest:
+The frontend react code has been tested with React Testing Library and Vitest, all tests passed:
 
-screenshot of frontend tests passing
+![FE Tests](docs\images\FE-tests-passed.jpg)
 
-The backend Django Restframework API endpoints have been succesfully tested with APITestCase:
+The backend Django Restframework API endpoints have been tested with APITestCase and all OK:
 ![API Endpoint Tests](docs\images\API-tests-OK.jpg)
 
 

@@ -147,7 +147,7 @@ test('Navigates to manage courses page on cancel button click', async () => {
 });
 
 
-test('student users do not see the delete course page', () => {
+test('students do not see the delete course page', () => {
   const wrapped = () => (
     <ProtectedRoute allowedRoles={["admin", "teacher"]}>
       <DeleteCourse/>
@@ -157,6 +157,6 @@ test('student users do not see the delete course page', () => {
   renderWithAuthContext(wrapped(), { auth: makeStudentAuth() });
   expect(screen.getByText(/You do not have permission to view this page./i)).toBeInTheDocument();
   expect(screen.queryByText(/Please confirm you wish to delete this course/i)).not.toBeInTheDocument();
-  expect(screen.queryByText(/Delete Course/i)).not.toBeInTheDocument();
+  expect(screen.queryByText(/Yes, delete this course/i)).not.toBeInTheDocument();
   expect(screen.queryByText(/Cancel/i)).not.toBeInTheDocument();
 });
