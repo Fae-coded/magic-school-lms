@@ -9,22 +9,15 @@ export default function DeleteCourse() {
   const { tokens, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { id } = useParams();  // Get course ID from URL params
+  const { id } = useParams();
   const [courseTitle, setCourseTitle] = useState();
   const [courseDescription, setCourseDescription] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-//   const [isLoading, setIsLoading] = useState(false);
 
 
   // Fetch current course data on mount
   useEffect(() => {
-    // if(isLoading) {
-    //       return;
-    //     }
-
-    //     setIsLoading(true);
-
     if (!id || !tokens?.access) return;
     const fetchCourse = async () => {
       try {
@@ -48,11 +41,11 @@ export default function DeleteCourse() {
       }
     };
     
-    
       fetchCourse();
     
   }, [id, tokens?.access]);
 
+  // Sends DELETE request to delete course
   const deleteCourse = async (id) => {
     try {
       const response = await fetch(`http://localhost:8000/api/courses/${id}/`, {
@@ -81,6 +74,7 @@ export default function DeleteCourse() {
     }
   };
 
+  // Resets form and navigates back to manage courses page
   const handleCancel = () => {
     setCourseTitle("");
     setCourseDescription("");
@@ -109,5 +103,3 @@ export default function DeleteCourse() {
     </div>
   );
 };
-
-// disabled={isLoading}

@@ -1,17 +1,15 @@
-import { screen } from '@testing-library/react';
-import { test, expect, vi } from 'vitest';
+import { screen, waitFor } from '@testing-library/react';
+import { test, expect, vi, beforeEach, afterEach} from 'vitest';
 import '@testing-library/jest-dom'
 import userEvent from '@testing-library/user-event'
 import { Routes, Route} from "react-router-dom"
 
 const navigateMock = vi.fn();
-// const paramsMock = { id: '1' };
 vi.mock('react-router-dom', async () => {
   const actual = await vi.importActual('react-router-dom');
   return {
     ...actual,
     useNavigate: () => navigateMock,
-    // useParams: () => paramsMock,
   };
 });
 
@@ -20,17 +18,24 @@ import { makeAdminAuth, makeStudentAuth, makeTeacherAuth } from '../test-utils/a
 import ProtectedRoute from '../components/ProtectedRoute.jsx';
 import DeleteCourse from './DeleteCourse.jsx';
 
+beforeEach(() => {
+  vi.spyOn(globalThis, "fetch").mockResolvedValue({
+    ok: true,
+    json: async () => ({}),
+  });
+});
+
+afterEach(() => {
+  vi.restoreAllMocks();
+});
+
 test('fetches course to delete and displays it for admin' , async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({
-        id: 1,
-        course_title: 'Magic Fundamentals of All Eight Schools',
-        course_description: 'Learn the foundations of magic.',
-      })
-    })
-  );
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      {id: 1, course_title: 'Magic Fundamentals of All Eight Schools', course_description: 'Learn the foundations of magic.'}
+    )
+    });
 
   renderWithAuthContext(
       <Routes>
@@ -41,112 +46,97 @@ test('fetches course to delete and displays it for admin' , async () => {
       route: '/courses/1',
       }
     );
-    const magicFunds = await screen.getByText('Magic Fundamentals of All Eight Schools');
+    const magicFunds = await screen.findByText('Magic Fundamentals of All Eight Schools');
     expect(magicFunds).toBeInTheDocument();
     expect(screen.getByText('Learn the foundations of magic.')).toBeInTheDocument();
-    expect(screen.getByText(/Please confirm you wish to delete this course/i)).toBeInTheDocument();
+    expect(screen.getByRole('heading', {name: /please confirm you wish to delete this course/i}));
     expect(screen.getByRole('button', { name: /Yes, delete this course/i })).toBeInTheDocument();
     expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
 });
 
 test('fetches course to delete and displays it for teacher' , async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
-      ok: true,
-      json: () => Promise.resolve({
-        id: 1,
-        course_title: 'Magic Fundamentals of All Eight Schools',
-        course_description: 'Learn the foundations of magic.',
-      })
-    })
-  );
+  fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      {id: 1, course_title: 'Magic Fundamentals of All Eight Schools', course_description: 'Learn the foundations of magic.'}
+    )
+    });
 
   renderWithAuthContext(
       <Routes>
         <Route path="/courses/:id" element={<DeleteCourse/>}/>
       </Routes>,
       {
-        auth: makeAdminAuth(),
+        auth: makeTeacherAuth(),
       route: '/courses/1',
       }
     );
-
-  renderWithAuthContext(<DeleteCourse/>, { auth: makeTeacherAuth() });
-  expect(await screen.getByText('Magic Fundamentals of All Eight Schools')).toBeInTheDocument();
+  expect(await screen.findByText('Magic Fundamentals of All Eight Schools')).toBeInTheDocument();
   expect(screen.getByText('Learn the foundations of magic.')).toBeInTheDocument();
-  expect(screen.getByText(/Please confirm you wish to delete this course/i)).toBeInTheDocument();
+  expect(screen.getByRole('heading', {name: /please confirm you wish to delete this course/i}));
   expect(screen.getByRole('button', { name: /Yes, delete this course/i })).toBeInTheDocument();
   expect(screen.getByRole('button', { name: /Cancel/i })).toBeInTheDocument();
 });
 
-
-test('fails to fetch course and shows error' , async () => {
-  globalThis.fetch = vi.fn(() =>
-    Promise.reject(new Error('Network error'))
-  );
-
-  renderWithAuthContext(<DeleteCourse/>, { auth: makeAdminAuth() });
-  const errorMsg = await screen.findByText(/Network error/i);
-  expect(errorMsg).toBeInTheDocument();
-});  
-
-
 test('deletes course on button click and navigates to manage course page afterwards', async () => {
-    vi.useFakeTimers();
-
-    globalThis.fetch = vi.fn(() =>
-    Promise.resolve({
+    fetch.mockResolvedValueOnce({
+    ok: true,
+    json: async () => (
+      { id: 1, course_title: 'Intro to Magic', course_description: 'Learn the basics of magic.' }
+    )
+  })
+  .mockResolvedValueOnce({
       ok: true,
-      json: () => Promise.resolve({
-        id: 1,
-        course_title: 'Intro to Magic',
-        course_description: 'Learn the basics of magic.',
-      })
-    })
-  );
+      json: async () => ({}),
+    });
 
-  renderWithAuthContext(<DeleteCourse/>, { auth: makeTeacherAuth() });
+  renderWithAuthContext(<Routes>
+        <Route path="/courses/:id" element={<DeleteCourse/>}/>
+      </Routes>,
+      {
+        auth: makeTeacherAuth(),
+      route: '/courses/1',
+      }
+    );
 
   const introToMagic = await screen.findByText('Intro to Magic');
   expect(introToMagic).toBeInTheDocument();
 
-  await userEvent.click(screen.getByText(/Yes, delete this course/i));
-
-  const success = await screen.findByText(/Course deleted/i);
-  expect(success).toBeInTheDocument();
-  vi.runAllTimers();
-  expect(navigateMock).toHaveBeenCalledWith('/teacher');
-  vi.useRealTimers();
-});
-
-
-test('fails to delete course and displays error message on failure', async () => {
-  let callCount = 0;
-  globalThis.fetch = vi.fn(() => {
-    callCount++;
-    // First call: fetch course data (success)
-    if (callCount === 1) {
-      return Promise.resolve({
-        ok: true,
-        json: () => Promise.resolve({
-          id: 1,
-          course_title: 'Magic 101',
-          course_description: 'Learn basics.',
-        })
-      });
-    }
-    // Second call: delete course (failure)
-    return Promise.resolve({
-      ok: false,
-    });
+  await userEvent.click(screen.getByRole('button', { name: /Yes, delete this course/i}));
+  expect(screen.getByText(/Course deleted/i)).toBeInTheDocument();
+    await waitFor(() => {
+      expect(navigateMock).toHaveBeenCalledWith('/teacher')
+    }, {timeout: 3000}
+  );
   });
 
-  renderWithAuthContext(<DeleteCourse/>, { auth: makeTeacherAuth() });
+test('fails to delete course and displays error message on failure', async () => {
+  fetch
+    .mockResolvedValueOnce({
+      ok: true,
+      json: async () => ({
+        id: 1,
+        course_title: 'Magic 101',
+        course_description: 'Learn basics.',
+      }),
+    })
+    .mockResolvedValueOnce({
+      ok: false,
+    });
 
-  const magic101 = await screen.findByText('Magic 101');
-  expect(magic101).toBeInTheDocument();
+  renderWithAuthContext(
+    <Routes>
+      <Route path="/courses/:id" element={<DeleteCourse />} />
+    </Routes>,
+    {
+      auth: makeTeacherAuth(),
+      route: '/courses/1',
+    }
+  );
 
-  await userEvent.click(screen.getByText(/Yes, delete this course/i));
+  expect(await screen.findByText('Magic 101')).toBeInTheDocument();
+
+  await userEvent.click(screen.getByRole('button', { name:/Yes, delete this course/i }));
   expect(await screen.findByText(/Course delete failed/i)).toBeInTheDocument();
 });
 

@@ -9,13 +9,12 @@ export default function DeleteUser() {
   const { tokens } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const { id } = useParams();  // Get course ID from URL params
+  const { id } = useParams();
   const [userUsername, setUserUsername] = useState();
   const [userEmail, setUserEmail] = useState();
   const [userRole, setUserRole] = useState();
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
-//   const [isLoading, setIsLoading] = useState(false);
 
   // Fetch current user data on mount
   useEffect(() => {
