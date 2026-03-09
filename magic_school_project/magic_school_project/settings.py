@@ -26,7 +26,9 @@ SECRET_KEY = 'django-insecure-3sc1-y@_0l*1g5cn3fnl8qe7l8_u4fbf%lk*b42&1aurppxg3#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    'magic-school-lms.onrender.com',
+]
 
 
 # Application definition
