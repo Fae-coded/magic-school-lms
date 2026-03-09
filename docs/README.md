@@ -12,7 +12,7 @@ This README file contains information about the Magic School Learning Management
 
 Initial Wireframes can be viewed [here](https://www.figma.com/design/Awb57P0vDdMdV5rvqqdX1N/Magic-School-LMS?).
 
-Please click [here]() to access the website.
+Please click [here](https://magic-school-lms.netlify.app/) to access the website.
 
 ## Technical Aspects and Features
 
@@ -63,7 +63,7 @@ The backend Django Restframework API endpoints have been tested with APITestCase
 
 The LMS frontend was deployed to [Netlify](https://www.netlify.com/) and the backend was deployed to [Render](https://render.com/).
 
-The live links can be found [here]() and [here](https://magic-school-lms.onrender.com)
+The live link can be found [here](https://magic-school-lms.netlify.app/)
 
 ## Set up guide
 
