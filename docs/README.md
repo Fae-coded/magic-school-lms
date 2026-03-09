@@ -2,7 +2,7 @@
 
 <!-- responsive web page picture here -->
 
-##Introduction
+## Introduction
 
 This README file contains information about the Magic School Learning Management System (LMS), its purpose, functionality, how to get started and how to run tests. The LMS allows 3 different types of users to access and interact accordingly with the Magic School system:
 
@@ -12,7 +12,7 @@ This README file contains information about the Magic School Learning Management
 
 Initial Wireframes can be viewed [here](https://www.figma.com/design/Awb57P0vDdMdV5rvqqdX1N/Magic-School-LMS?).
 
-Please click here to access the website.
+Please click [here]() to access the website.
 
 ## Technical Aspects and Features
 
@@ -55,22 +55,30 @@ The frontend react code has been tested with React Testing Library and Vitest, a
 ![FE Tests](docs\images\FE-tests-passed.jpg)
 
 The backend Django Restframework API endpoints have been tested with APITestCase and all OK:
+
 ![API Endpoint Tests](docs\images\API-tests-OK.jpg)
 
 
 ## Deployment
 
-The site was deployed to SITE. The steps to deploy are as follows:
+The LMS frontend was deployed to [Netlify](https://www.netlify.com/) and the backend was deployed to [Render](https://render.com/).
 
 The live link can be found [here]()
 
 ## Set up guide
 
-how to set up and run the application locally
-- clone repo
-- .ven virtual environment set up
-- activate BE
-- change environment variable in fetch requests in frontend 
+To run the application locally:
+
+1. Clone the GitHub repository found [here](https://github.com/Fae-coded/magic-school-lms) and open in your chosen IDE.
+2. Create a virtual environment (venv) by inputting python -m venv projectname into the terminal.
+3. Then activate the virtual environment with projectname/Scripts/activate
+
+4. change environment variable in fetch requests in frontend
+5. Run backend with python manage.py run
+6. Run frontend with npm run dev
+
+explains how to set up and use the project, including environment setup, database initialization?, and running the server.
+ 
 
 ## Testing guide
 
