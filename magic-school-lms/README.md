@@ -1,13 +1,13 @@
 # Magic School Learning Management System
 
-<!-- responsive web page picture here -->
+<img src= "docs/images/LMS-different-screens.jpg" alt= "LMS on different screens" width= "75%"/>
 
 ## Introduction
 
 This README file contains information about the Magic School Learning Management System (LMS), its purpose, functionality, how to get started and how to run tests. The LMS allows 3 different types of users to access and interact accordingly with the Magic School system:
 
 - Students can view and enroll in courses. They can check the courses they are enrolled on too.
-- Teachers can create, view, edit and delete courses.
+- Teachers can create, view, edit and delete their own courses.
 - Admin can also create, view, edit and delete courses, as well as manage users of the system.
 
 Initial Wireframes can be viewed [here](https://www.figma.com/design/Awb57P0vDdMdV5rvqqdX1N/Magic-School-LMS?).
@@ -38,6 +38,8 @@ Additional to the backend authorization, the frontend enforces role based page a
 - [GitHub](https://github.com/) was used to host the code of the website.
 - [Figma](https://www.figma.com/) was used for producing initial wireframes. Wireframes can be viewed [here](https://www.figma.com/design/Awb57P0vDdMdV5rvqqdX1N/Magic-School-LMS?).
 - [Phind](https://www.phind.com/) used as a troubleshoot tool.
+- [Netlify](https://www.netlify.com/) for deploying the React frontend.
+- [Render](https://render.com/) for deploying the Django backend.
 
 ## Future enhancements
 
@@ -68,24 +70,25 @@ The live link can be found [here](https://magic-school-lms.netlify.app/)
 
 To run the application locally:
 
-1. Clone the GitHub repository found [here](https://github.com/Fae-coded/magic-school-lms) and open in your chosen IDE.
-2. Create a virtual environment (venv) by inputting python -m venv magicschoollms into the terminal.
-3. Then activate the virtual environment with magicschoollms/Scripts/activate
-
-4. change environment variable in fetch requests in frontend
-5. Run backend with python manage.py run
-6. Run frontend with npm run dev
-
-explains how to set up and use the project, including environment setup, database initialization?, and running the server.
+1. Clone the GitHub repository found [here](https://github.com/Fae-coded/magic-school-lms).
+2. Open your CLI and change your working directory to the location where you want the cloned directory. Enter git clone followed by the HTTPS URL into your CLI.
+3. Open the repository within your chosen IDE and navigate to the magic-school-project directory. Create a virtual environment (venv) by inputting python -m venv magicschoollms into the terminal.
+4. Then activate the virtual environment with magicschoollms/Scripts/activate .
+5. Install required backend packages with pip install -r requirements.txt .
+6. To create the database schema run migrations with python manage.py migrate .
+7. To run the Django backend server enter python manage.py runserver in the terminal.
+8. In another terminal change directory to the frontend magic-school-lms, and install required packages with npm install.
+9. To run the React server enter npm run dev.
 
 ## Testing guide
 
 To run the React tests, open a new terminal and change directory to magic-school-lms. Then run npm run test .
-To run the Django API test, open a new terminal and change directory to magic-school-project. Then run python manage.py test .
+
+To run the Django API tests, open a new terminal and change directory to magic-school-project. Then run python manage.py test .
 
 ## Credits
 
-### - Inspiration
+### Inspiration
 
 - Our weekly D&D game set in the magic school, Strixhaven University, with my friends and partner.
 - My partner Laurie and our dog King for being the best rubber ducks.
