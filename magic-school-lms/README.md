@@ -52,12 +52,11 @@ Additional to the backend authorization, the frontend enforces role based page a
 
 The frontend react code has been tested with React Testing Library and Vitest, all tests passed:
 
-![FE Tests](docs\images\FE-tests-passed.jpg)
+![FE Tests Passed](docs/images/FE-tests-passed.webp)
 
 The backend Django Restframework API endpoints have been tested with APITestCase and all OK:
 
-![API Endpoint Tests](docs\images\API-tests-OK.jpg)
-
+![API Tests Ok](docs/images/API-tests-OK.webp)
 
 ## Deployment
 
@@ -70,21 +69,19 @@ The live link can be found [here](https://magic-school-lms.netlify.app/)
 To run the application locally:
 
 1. Clone the GitHub repository found [here](https://github.com/Fae-coded/magic-school-lms) and open in your chosen IDE.
-2. Create a virtual environment (venv) by inputting python -m venv projectname into the terminal.
-3. Then activate the virtual environment with projectname/Scripts/activate
+2. Create a virtual environment (venv) by inputting python -m venv magicschoollms into the terminal.
+3. Then activate the virtual environment with magicschoollms/Scripts/activate
 
 4. change environment variable in fetch requests in frontend
 5. Run backend with python manage.py run
 6. Run frontend with npm run dev
 
 explains how to set up and use the project, including environment setup, database initialization?, and running the server.
- 
 
 ## Testing guide
 
-how to run the tests
-- frontend npm run test
-- backend python manage.py test
+To run the React tests, open a new terminal and change directory to magic-school-lms. Then run npm run test .
+To run the Django API test, open a new terminal and change directory to magic-school-project. Then run python manage.py test .
 
 ## Credits
 
