@@ -20,8 +20,9 @@ export default function DeleteCourse() {
   useEffect(() => {
     if (!id || !tokens?.access) return;
     const fetchCourse = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        const response = await fetch(`http://localhost:8000/api/courses/${id}/`,
+        const response = await fetch(`${apiUrl}/courses/${id}/`,
           {
         headers: {
           Authorization: `Bearer ${tokens?.access}`,
@@ -47,8 +48,9 @@ export default function DeleteCourse() {
 
   // Sends DELETE request to delete course
   const deleteCourse = async (id) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`http://localhost:8000/api/courses/${id}/`, {
+      const response = await fetch(`${apiUrl}/courses/${id}/`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${tokens?.access}`,

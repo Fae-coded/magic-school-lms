@@ -16,9 +16,10 @@ export default function ManageUsers() {
     if (!tokens?.access) return;
 
     const fetchUsers = async () => {
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
             console.log("Token being sent:", tokens?.access);
-            const response = await fetch('http://127.0.0.1:8000/api/users/',
+            const response = await fetch(`${apiUrl}/users/`,
               {
                 headers: {
                         "Authorization": `Bearer ${tokens?.access}`,

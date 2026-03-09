@@ -27,8 +27,9 @@ export default function RegisterForm() {
         }
 
         setIsLoading(true);
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/register/', {
+            const response = await fetch(`${apiUrl}/register/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

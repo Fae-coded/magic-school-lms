@@ -16,8 +16,9 @@ export default function StudentDashboard() {
         if (!tokens?.access) return;
 
         const fetchCourses = async () => {
+            const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/courses/',
+            const response = await fetch(`${apiUrl}/courses/`,
                 {
                     headers: {
                         "Authorization": `Bearer ${tokens?.access}`,
@@ -45,8 +46,9 @@ export default function StudentDashboard() {
     
 
     const onButtonClick= async (id) => {
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch(`http://127.0.0.1:8000/api/courses/${id}/enroll/`, {
+            const response = await fetch(`${apiUrl}/courses/${id}/enroll/`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

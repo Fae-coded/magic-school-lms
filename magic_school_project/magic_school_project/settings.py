@@ -29,8 +29,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'magic-school-lms.onrender.com',
-    "http://0.0.0.0",
-    'http://127.0.0.1'
+    "0.0.0.0",
+    "127.0.0.1"
 ]
 
 
@@ -70,7 +70,8 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "http://0.0.0.0"
+    "http://0.0.0.0",
+    "http://127.0.0.1"
 ]
 
 ROOT_URLCONF = 'magic_school_project.urls'

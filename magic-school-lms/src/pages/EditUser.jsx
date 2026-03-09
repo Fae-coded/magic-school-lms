@@ -21,8 +21,9 @@ export default function EditUser() {
 
     if (!id || !tokens?.access) return;
     const fetchUser = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}/`,
+        const response = await fetch(`${apiUrl}/users/${id}/`,
           {
         headers: {
           Authorization: `Bearer ${tokens?.access}`,
@@ -54,8 +55,9 @@ export default function EditUser() {
       email: userEmail,
       role: userRole
     };
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}/`, {
+      const response = await fetch(`${apiUrl}/users/${id}/`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

@@ -21,8 +21,9 @@ export default function EditCourse() {
 
     if (!id || !tokens?.access) return;
     const fetchCourse = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        const response = await fetch(`http://localhost:8000/api/courses/${id}/`,
+        const response = await fetch(`${apiUrl}/courses/${id}/`,
           {
         headers: {
           Authorization: `Bearer ${tokens?.access}`,
@@ -51,8 +52,9 @@ export default function EditCourse() {
       course_title: courseTitle,
       course_description: courseDescription,
     };
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`http://localhost:8000/api/courses/${id}/`, {
+      const response = await fetch(`${apiUrl}/courses/${id}/`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

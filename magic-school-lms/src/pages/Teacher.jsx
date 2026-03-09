@@ -16,8 +16,9 @@ export default function TeacherDashboard() {
         if (!tokens?.access) return;
         
         const fetchTeacherCourses = async () => {
+        const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            const response = await fetch('http://127.0.0.1:8000/api/teachers/courses/',
+            const response = await fetch(`${apiUrl}/teachers/courses/`,
                 {
                     headers: {
                         "Authorization": `Bearer ${tokens?.access}`,

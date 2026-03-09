@@ -20,8 +20,9 @@ export default function CreateCourse() {
       course_title: courseTitle,
       course_description: courseDescription,
     };
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch("http://127.0.0.1:8000/api/courses/", {
+      const response = await fetch(`${apiUrl}/courses/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

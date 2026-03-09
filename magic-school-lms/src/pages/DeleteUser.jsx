@@ -20,8 +20,9 @@ export default function DeleteUser() {
   useEffect(() => {
     if (!id || !tokens?.access) return;
     const fetchUser = async () => {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        const response = await fetch(`http://localhost:8000/api/users/${id}/`,
+        const response = await fetch(`${apiUrl}/users/${id}/`,
           {
         headers: {
           Authorization: `Bearer ${tokens?.access}`,
@@ -48,8 +49,9 @@ export default function DeleteUser() {
 
   // Sends DELETE request to delete user
   const deleteUser = async (id) => {
+    const apiUrl = import.meta.env.VITE_API_URL;
     try {
-      const response = await fetch(`http://localhost:8000/api/users/${id}/`, {
+      const response = await fetch(`${apiUrl}/users/${id}/`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${tokens?.access}`,

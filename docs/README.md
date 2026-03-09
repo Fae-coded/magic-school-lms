@@ -63,7 +63,7 @@ The backend Django Restframework API endpoints have been tested with APITestCase
 
 The LMS frontend was deployed to [Netlify](https://www.netlify.com/) and the backend was deployed to [Render](https://render.com/).
 
-The live link can be found [here]()
+The live links can be found [here]() and [here](https://magic-school-lms.onrender.com)
 
 ## Set up guide
 

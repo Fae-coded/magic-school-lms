@@ -31,8 +31,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = async () => {
     if (auth.tokens?.refresh) {
+      const apiUrl = import.meta.env.VITE_API_URL;
       try {
-        await fetch("http://localhost:8000/api/logout/", {
+        await fetch(`${apiUrl}/logout/`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
