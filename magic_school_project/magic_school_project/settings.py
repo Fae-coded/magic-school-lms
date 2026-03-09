@@ -29,6 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     'magic-school-lms.onrender.com',
+    "http://0.0.0.0"
 ]
 
 
