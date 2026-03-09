@@ -23,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-3sc1-y@_0l*1g5cn3fnl8qe7l8_u4fbf%lk*b42&1aurppxg3#'
 
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -67,6 +68,7 @@ REST_FRAMEWORK = {
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "http://0.0.0.0"
 ]
 
 ROOT_URLCONF = 'magic_school_project.urls'
