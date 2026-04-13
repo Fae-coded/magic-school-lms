@@ -5,7 +5,7 @@ import { Route, RouterProvider, createBrowserRouter, createRoutesFromElements } 
 import Root from './pages/Root.jsx'
 import Home from './pages/Home.jsx';
 import Form from './pages/LoginRegister.jsx';
-import StudentDashboard from './pages/student.jsx'
+import StudentDashboard from './pages/Student.jsx'
 import TeacherDashboard from './pages/Teacher.jsx'
 import StudentCourses from './pages/StudentCourses.jsx'
 import CreateCourse from './pages/CreateCourse.jsx';

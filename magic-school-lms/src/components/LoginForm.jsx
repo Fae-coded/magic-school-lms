@@ -42,7 +42,6 @@ export default function LoginForm() {
         body: JSON.stringify(formData)
       });
       const data = await response.json();
-      console.log("Response status:", response.status);
 
       if (response.ok) {
         login(data.user, data.tokens);

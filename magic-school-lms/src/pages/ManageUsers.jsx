@@ -18,7 +18,6 @@ export default function ManageUsers() {
     const fetchUsers = async () => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            console.log("Token being sent:", tokens?.access);
             const response = await fetch(`${apiUrl}/users/`,
               {
                 headers: {

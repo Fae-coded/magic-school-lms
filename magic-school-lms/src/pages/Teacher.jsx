@@ -27,7 +27,6 @@ export default function TeacherDashboard() {
     );
             
             if (!response.ok) {
-                console.log("response:", response);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             

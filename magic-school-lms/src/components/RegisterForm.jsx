@@ -36,7 +36,7 @@ export default function RegisterForm() {
                 },
                 body: JSON.stringify(formData)
             });
-            console.log("Response status:", response.status);
+            // console.log("Response status:", response.status);
             if (response.ok) {
                 setSuccessMessage('Registration successful!');
                 setTimeout(() => {

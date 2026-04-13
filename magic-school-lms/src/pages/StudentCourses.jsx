@@ -26,7 +26,6 @@ export default function StudentCourses() {
     );
             
             if (!response.ok) {
-                console.log("response:", response);
                 throw new Error(`HTTP error! status: ${response.status}`);
             }
             

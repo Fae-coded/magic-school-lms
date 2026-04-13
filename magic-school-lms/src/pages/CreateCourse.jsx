@@ -44,8 +44,7 @@ export default function CreateCourse() {
         }, 5000);
       });
       } else {
-        const data = await response.json();
-        console.log("Course created:", data);
+        await response.json();
         setSuccessMessage("Course created!");
         setTimeout(() => {
           if (user.role === "admin") {
