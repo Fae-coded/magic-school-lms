@@ -82,7 +82,8 @@ export default function StudentDashboard() {
         <CardContainer containerTitle="Available Courses">
             {loading && <p>Loading courses...</p>}
             {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-            {!loading && !error && courses.length > 0 ? (
+            {!loading && !error && courses.length === 0 && <p>No courses available</p>}
+            {!loading && !error && courses.length > 0 && (
                 courses.map((course) => (
                     <Card 
                         key={course.id}
@@ -93,8 +94,6 @@ export default function StudentDashboard() {
                         onButtonClick={() => onButtonClick(course.id)}
                     />
                 ))
-            ) : (
-                <p>No courses available</p>
             )}
             {successMessage && <p className="success-message">{successMessage}</p>}
             {errorMessage && <p className="error-message">{errorMessage}</p>}

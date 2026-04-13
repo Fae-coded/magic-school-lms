@@ -48,7 +48,8 @@ export default function TeacherDashboard() {
       <CardContainer containerTitle="Your Teaching Courses">
             {loading && <p>Loading courses...</p>}
             {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-            {!loading && !error && courses.length > 0 ? (
+            {!loading && !error && courses.length === 0 && <p>No courses available</p>}
+            {!loading && !error && courses.length > 0 && (
                 courses.map((course) => (
                     <Card 
                         key={course.id}
@@ -58,8 +59,6 @@ export default function TeacherDashboard() {
                         secondButtonText="Delete Course" onSecondButtonClick={() => navigate(`/delete-course/${course.id}`)}
                     />
                 ))
-            ) : (
-                <p>No courses available</p>
             )}
         </CardContainer>      
     );

@@ -47,7 +47,8 @@ export default function ManageUsers() {
     <CardContainer containerTitle="Manage Users">
       {loading && <p>Loading users...</p>}
       {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-      {!loading && !error && users.length > 0 ? (
+      {!loading && !error && users.length === 0 && <p>No users found</p>}
+      {!loading && !error && users.length > 0 && (
                 users.map((user) => (
                     <Card
                         key={user.id}
@@ -58,7 +59,7 @@ export default function ManageUsers() {
                         secondButtonText="Delete User" onSecondButtonClick={() => navigate(`/delete-user/${user.id}`)}
                     />
                   ))
-          ) : (<p>No users found</p>)}
+          )}
     </CardContainer>
   );
 }

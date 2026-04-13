@@ -45,7 +45,8 @@ export default function AdminDashboard() {
     <CardContainer containerTitle="Manage Courses">
             {loading && <p>Loading courses...</p>}
             {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-            {!loading && !error && courses.length > 0 ? (
+            {!loading && !error && courses.length === 0 && <p>No courses available</p>}
+            {!loading && !error && courses.length > 0 && (
                 courses.map((course) => (
                     <Card 
                         key={course.id}
@@ -55,7 +56,7 @@ export default function AdminDashboard() {
                         secondButtonText="Delete Course" onSecondButtonClick={() => navigate(`/delete-course/${course.id}`)}
                     />
                 ))
-            ) : (<p>No courses available</p>)}
+            )}
         </CardContainer>      
     );
 }

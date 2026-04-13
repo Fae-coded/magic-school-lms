@@ -16,7 +16,6 @@ export default function StudentCourses() {
         const fetchStudentCourses = async () => {
         const apiUrl = import.meta.env.VITE_API_URL;
         try {
-            console.log("Token being sent:", tokens?.access);
             const response = await fetch(`${apiUrl}/students/courses/`,
                 {
                     headers: {
@@ -46,9 +45,10 @@ export default function StudentCourses() {
     return (
         
             <CardContainer containerTitle="Your Enrolled Courses">
-                {loading && <p>Loading courses...</p>}
+            {loading && <p>Loading courses...</p>}
             {error && <p style={{ color: 'red' }}>Error: {error}</p>}
-            {!loading && !error && courses.length > 0 ? (
+            {!loading && !error && courses.length === 0 && <p>No courses available</p>}
+            {!error && courses.length > 0 && (
                 courses.map((course) => (
                     <Card 
                         key={course.id}
@@ -58,8 +58,6 @@ export default function StudentCourses() {
                         buttonDisabled={true}
                     />
                 ))
-            ) : (
-                <p>No courses available</p>
             )}
             </CardContainer>
     );
