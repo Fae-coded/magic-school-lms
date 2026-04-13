@@ -61,9 +61,18 @@ p {
     margin: 15px 0px 20px;;
 }
 
+.form-link{
+    color: #ffffff;
+    background-color: transparent;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 0px;
+    margin: 0px 5px; 
+}
+
 .form-link:hover {
     color: #451A58;
-
+    background-color: transparent;
 }
 
 .success-message {
